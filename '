@@ -10,7 +10,7 @@ type Server struct {
 	port int
 }
 
-func RegisterRoutes() http.Handler {
+func HandleCreator() handler http.Handler {
 	mux := http.NewServeMux()
 
 	component := views.Hello("Apprentice")
@@ -23,7 +23,7 @@ func RegisterRoutes() http.Handler {
 func NewServer(handler http.Handler) *http.Server {
 	const port = "8000"
 	
-	mux := handler
+	mux := HandleCreator()
 	
 	srv := &http.Server{
 		Addr:		":" + port,
