@@ -1,0 +1,14 @@
+package server
+
+import (
+	"net/http"
+	"fmt"
+)
+
+func RegisterRoutes() http.Handler {
+	mux := http.NewServeMux()
+
+	mux.Hande("/", handlerHelloWorld()})
+
+	return mux
+}

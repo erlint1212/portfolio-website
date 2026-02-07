@@ -1,0 +1,15 @@
+package server
+
+import (
+	"encoding/json"
+	"net/http"
+)
+
+func handleHelloWorld(w http.ResponseWriter, r *http.Request) {
+	ResponWithJSON(
+		w,
+		http.StatusOK,
+		response={}
+	)
+	
+}
