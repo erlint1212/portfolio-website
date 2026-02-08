@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: portfolio-web-configmap
+data:
+  WEB_PORT: "8000"
+  API_URL: "http://portfolio.main"
+

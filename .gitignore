@@ -1,1 +1,28 @@
+# Go Artifacts
+# Binaries
+/bin/
+/dist/
+main
+portfolio
+*.exe
+*.test
+
+# Vendor 
+vendor/
+
+# Nix & Direnv 
+.direnv/
+result
+result-*
+
+# OS & Editor Clutter 
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project Specific Junk 
+*.bak
+project_context.txt
 context_builder.py

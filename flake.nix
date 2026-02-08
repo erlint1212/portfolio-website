@@ -18,6 +18,7 @@
             templ
             docker
             kubectl
+            minikube
             rabbitmq-server
             
             # Useful tools for debugging
@@ -26,6 +27,8 @@
           ];
 
           shellHook = ''
+            echo "Enter the Minikube Docker Environment"
+            eval $(minikube docker-env)
             echo "Environment: Go + Htmx +Templ + K8s"
             echo "------------------------------------------------"
             go version

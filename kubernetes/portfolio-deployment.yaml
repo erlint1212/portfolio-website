@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: portfolio-web
+  name: portfolio-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portfolio-web
+  template:
+    metadata:
+      labels:
+        app: portfolio-web
+    spec:
+      containers:
+        - image: portfolio:v1
+          name: portfolio-web
+          imagePullPolicy: Never
+          resources: {}
+          envFrom:
+            - configMapRef:
+                name: portfolio-web-configmap
+
