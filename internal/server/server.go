@@ -13,17 +13,17 @@ type Server struct {
 func RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
-	component := views.Hello("Apprentice")
+	home_component := views.Home("Apprentice")
+	projects_component := views.ProjectList()
 	
-	mux.Handle("/", templ.Handler(component))
+	mux.Handle("/", templ.Handler(home_component))
+	mux.Handle("/projects", templ.Handler(projects_component))
 
 	return mux
 }
 
-func NewServer(handler http.Handler) *http.Server {
+func NewServer(mux http.Handler) *http.Server {
 	const port = "8000"
-	
-	mux := handler
 	
 	srv := &http.Server{
 		Addr:		":" + port,

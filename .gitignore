@@ -9,6 +9,7 @@ portfolio
 
 # Vendor 
 vendor/
+assets/
 
 # Nix & Direnv 
 .direnv/
