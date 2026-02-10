@@ -1,9 +1,23 @@
 package views
 
 templ ProjectList() {
-    <ul>
-        <li>RPG Game</li>
-        <li>Portfolio</li>
-        <li>Chat App</li>
-    </ul>
+    <div id="game-container">
+        <ul>
+            <li>
+                <button hx-get="/games/rpg" hx-target="#game-container" hx-swap="innerHTML" class="button">
+                    RPG Game
+                </button>
+            </li>
+            <li>Portfolio</li>
+            <li>Chat App</li>
+        </ul>
+    </div>
+}
+
+templ GameView(game_path string) {
+    <div class="game-container">
+        <iframe src={ game_path } width="800" height="600" frameborder="0"></iframe>
+        <br/>
+        <button hx-get="/projects" hx-target="#game-container" hx-swap="outerHTML">Back to List</button>
+    </div>
 }

@@ -62,7 +62,7 @@ func homeContent() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<h1>Welcome, Archmage!</h1><button hx-get=\"/projects\" hx-target=\"#project-list\" hx-swap=\"innerHTML\" class=\"button\">Button</button><div id=\"project-list\"></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<h1>Welcome to my portfoilio page!</h1><button hx-get=\"/projects\" hx-target=\"#project-list\" hx-swap=\"innerHTML\" class=\"button\">Button</button><div id=\"project-list\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

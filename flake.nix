@@ -20,6 +20,8 @@
             kubectl
             minikube
             rabbitmq-server
+
+            python313Packages.pathspec
             
             # Useful tools for debugging
             curl 
@@ -29,10 +31,11 @@
           shellHook = ''
             echo "Enter the Minikube Docker Environment"
             eval $(minikube docker-env)
-            echo "Environment: Go + Htmx +Templ + K8s"
+            echo "Environment: Go + Htmx + Templ + K8s"
             echo "------------------------------------------------"
             go version
             templ --version
+            alias tgr='templ generate && go run cmd/web/main.go'
           '';
         };
       }
