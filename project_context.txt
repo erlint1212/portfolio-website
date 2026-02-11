@@ -5,12 +5,17 @@ Project Directory Structure:
     README.md
     flake.nix
     flake.lock
+    challenge.md
     go.mod
     '
     go.sum
     Dockerfile
     .gitignore
     internal/
+        routing/
+            routing.go
+        messaging/
+            client.go
         views/
             layout.templ
             hello_templ.go
@@ -29,6 +34,9 @@ Project Directory Structure:
         web/
             main.go
     kubernetes/
+        portfolio-rabbitmq-deployment.yaml
+        portfolio-rabbitmq-configmap.yaml
+        portfolio-rabbitmq-service.yaml
         portfolio-deployment.yaml
         portfolio-configmap.yaml
         portfolio-service.yaml
@@ -91,6 +99,8 @@ go 1.25.5
 
 require github.com/a-h/templ v0.3.960
 
+require github.com/rabbitmq/amqp091-go v1.10.0 // indirect
+
 --- END OF FILE: ./go.mod ---
 
 --- START OF FILE: ./.gitignore ---
@@ -125,6 +135,121 @@ project_context.txt
 context_builder.py
 
 --- END OF FILE: ./.gitignore ---
+
+--- START OF FILE: ./internal/routing/routing.go ---
+package routing
+
+const (
+	ExchangePerilDirect = "portfolio_direct"
+	ExchangePerilTopic  = "portfolio_topic"
+)
+
+type SimpleQueueType int
+
+const (
+	Transient SimpleQueueType = iota
+	Durable
+)
+
+type AckType int
+
+const (
+	Ack AckType = iota
+	NackRequeue
+	NackDiscard
+)
+
+
+--- END OF FILE: ./internal/routing/routing.go ---
+
+--- START OF FILE: ./internal/messaging/client.go ---
+package messaging
+
+import (
+	amqp "github.com/rabbitmq/amqp091-go"
+	"github.com/erlint1212/portfolio/internal/routing"
+	"fmt"
+)
+
+type Client struct {
+	conn *amqp.Connection
+}
+
+func NewClient(url string) (*Client, error) {
+	connection, err := amqp.Dial(url)
+	if err != nil {
+		return nil, err
+	}
+
+	client := Client{
+		conn: connection,
+	}
+
+	return &client, nil
+}
+
+func (c *Client) Close() error {
+	return c.conn.Close()
+}
+
+func (c *Client) Publish(queue_name string, body string) error {
+	channel, _, err := DeclareAndBind(
+		c.conn, 
+		routing.ExchangePerilTopic,
+		"portfolio_logs", 
+		"portfolio_logs.*", 
+		routing.Durable,
+	)
+	if err != nil {
+		return err
+	}
+	defer channel.Close()
+
+	return nil
+
+}
+
+func DeclareAndBind(
+	conn *amqp.Connection,
+	exchange,
+	queueName,
+	key string,
+	queueType routing.SimpleQueueType, // an enum to represent "durable" or "transient"
+) (*amqp.Channel, amqp.Queue, error) {
+	channel, err := conn.Channel()
+	if err != nil {
+		return nil, amqp.Queue{}, err
+	}
+
+	transient := false
+	durable := false
+	switch queueType {
+	case routing.Transient:
+		transient = true
+	case routing.Durable:
+		durable = true
+	default:
+		return nil, amqp.Queue{}, fmt.Errorf("queueType not recognized: %v", queueType)
+	}
+
+	args := amqp.Table{"x-dead-letter-exchange": "peril_dlx"}
+
+	queue, err := channel.QueueDeclare(queueName, durable, transient, transient, false, args)
+	if err != nil {
+		return nil, amqp.Queue{}, err
+	}
+	fmt.Printf("Log: Name of queue \"%v\"\n", queue.Name)
+
+	err = channel.QueueBind(queueName, key, exchange, false, nil)
+	if err != nil {
+		return nil, amqp.Queue{}, err
+	}
+
+	return channel, queue, err
+}
+
+
+--- END OF FILE: ./internal/messaging/client.go ---
 
 --- START OF FILE: ./internal/views/layout.templ ---
 package views
@@ -288,7 +413,7 @@ func ProjectList() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<ul><li><button hx-get=\"/games/rpg\" hx-target=\"#game-container\" hx-swap=\"innerHTML\" class=\"button\">RPG Game</button></li><li>Portfolio</li><li>Chat App</li></ul>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"game-container\"><ul><li><button hx-get=\"/games/rpg\" hx-target=\"#game-container\" hx-swap=\"innerHTML\" class=\"button\">Masked Platformer Game</button></li><li>Portfolio</li><li>Chat App</li></ul></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -324,7 +449,7 @@ func GameView(game_path string) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(game_path)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 15, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 19, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -372,15 +497,17 @@ templ HtmxIndicator() {
 package views
 
 templ ProjectList() {
-    <ul>
-        <li>
-            <button hx-get="/games/rpg" hx-target="#game-container" hx-swap="innerHTML" class="button">
-                RPG Game
-            </button>
-        </li>
-        <li>Portfolio</li>
-        <li>Chat App</li>
-    </ul>
+    <div id="game-container">
+        <ul>
+            <li>
+                <button hx-get="/games/rpg" hx-target="#game-container" hx-swap="innerHTML" class="button">
+                    Masked Platformer Game
+                </button>
+            </li>
+            <li>Portfolio</li>
+            <li>Chat App</li>
+        </ul>
+    </div>
 }
 
 templ GameView(game_path string) {
@@ -458,7 +585,11 @@ func homeContent() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<h1>Welcome to my portfoilio page!</h1><button hx-get=\"/projects\" hx-target=\"#project-list\" hx-swap=\"innerHTML\" class=\"button\">Button</button><div id=\"project-list\"></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<h1>Welcome to my portfoilio page!</h1>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = ProjectList().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -480,8 +611,7 @@ templ Home(title string) {
 templ homeContent() {
     @HtmxIndicator()
     <h1>Welcome to my portfoilio page!</h1>
-    <button hx-get="/projects" hx-target="#project-list" hx-swap="innerHTML" class="button">Button</button>
-    <div id="project-list"></div>
+    @ProjectList()
 }
 
 --- END OF FILE: ./internal/views/home.templ ---
@@ -555,16 +685,19 @@ var _ = templruntime.GeneratedTemplate
 package server
 
 import (
+	"log"
 	"net/http"
 	"github.com/a-h/templ"
 	"github.com/erlint1212/portfolio/internal/views"
+	"github.com/erlint1212/portfolio/internal/messaging"
 )
 
 type Server struct {
-	port int
+	Addr string
+	client *messaging.Client
 }
 
-func addGodotHeaders(next http.Handler) http.Handler {
+func  addGodotHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
 		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
@@ -572,7 +705,20 @@ func addGodotHeaders(next http.Handler) http.Handler {
 	})
 }
 
-func RegisterRoutes() http.Handler {
+func (s *Server) handlerUserStartGame() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if s.client != nil {
+			err := s.client.Publish("game_events", "User started RPG Game")
+			if err != nil {
+				log.Printf("Failed to publish event: %v", err)
+			}
+		}
+
+		templ.Handler(views.GameView("/assets/games/rpg/index.html")).ServeHTTP(w, r)
+	}
+}
+
+func (s *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
 	home_component := views.Home("Apprentice")
@@ -584,21 +730,35 @@ func RegisterRoutes() http.Handler {
 	file_server := http.FileServer(http.Dir("./assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", addGodotHeaders(file_server)))
 
-	mux.Handle("/games/rpg", templ.Handler(views.GameView("/assets/games/rpg/index.html")))
+	mux.Handle("/games/rpg", s.handlerUserStartGame())
 
 	return mux
 }
 
-func NewServer(mux http.Handler) *http.Server {
+func NewServer() (*Server, *messaging.Client) {
 	const port = "8000"
+	const amqpURL = "amqp://guest:guest@localhost:5672/"
+
+	client, err := messaging.NewClient(amqpURL)
+	if err != nil {
+		log.Printf("[WARNING] Could not connect to RabbitMQ: %v", err)
+	}
 	
-	srv := &http.Server{
+	srv := &Server{
 		Addr:		":" + port,
-		Handler:	mux,
+		client:		client,
 	}
 
-	return srv
+	return srv, client
 
+}
+
+func (s *Server) ListenAndServe() error {
+	srv := &http.Server{
+		Addr: s.Addr,
+		Handler: s.RegisterRoutes(),
+	}
+	return srv.ListenAndServe()
 }
 
 --- END OF FILE: ./internal/server/server.go ---
@@ -612,8 +772,13 @@ import (
 )
 
 func main() {
-	mux := server.RegisterRoutes()
-	srv := server.NewServer(mux)
+	srv, client := server.NewServer()
+	defer func() {
+		err := client.Close()
+		if err != nil {
+			log.Printf("[WARNING] Failed to close connection: %v", err)
+		}
+	}()
 
 	log.Printf("Serving on: http://localhost%s/\n", srv.Addr)
 	log.Fatal(srv.ListenAndServe())

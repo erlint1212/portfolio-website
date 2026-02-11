@@ -6,8 +6,13 @@ import (
 )
 
 func main() {
-	mux := server.RegisterRoutes()
-	srv := server.NewServer(mux)
+	srv, client := server.NewServer()
+	defer func() {
+		err := client.Close()
+		if err != nil {
+			log.Printf("[WARNING] Failed to close connection: %v", err)
+		}
+	}()
 
 	log.Printf("Serving on: http://localhost%s/\n", srv.Addr)
 	log.Fatal(srv.ListenAndServe())

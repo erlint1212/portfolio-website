@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: portfolio-rabbitmq-managment
+  name: portfolio-rabbitmq-managment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portfolio-rabbitmq-managment
+  template:
+    metadata:
+      labels:
+        app: portfolio-rabbitmq-managment
+    spec:
+      containers:
+        - image: rabbitmq:3.12-management
+          name: portfolio-rabbitmq-managment
+          imagePullPolicy: IfNotPresent
+          resources: {}
+          envFrom:
+            - configMapRef:
+                name: portfolio-rabbitmq-managment-configmap
+
