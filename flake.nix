@@ -31,7 +31,7 @@
           shellHook = ''
             echo "Enter the Minikube Docker Environment"
             eval $(minikube docker-env)
-            echo "Environment: Go + Htmx + Templ + K8s"
+            echo "Environment: GOTH: Go + Tailwind + Htmx + Templ + K8s"
             echo "------------------------------------------------"
             go version
             templ --version

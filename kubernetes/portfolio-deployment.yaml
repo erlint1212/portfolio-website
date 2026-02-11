@@ -15,7 +15,7 @@ spec:
         app: portfolio-web
     spec:
       containers:
-        - image: portfolio:v1
+        - image: portfolio:v2
           name: portfolio-web
           imagePullPolicy: Never
           resources: {}

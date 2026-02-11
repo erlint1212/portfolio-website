@@ -58,7 +58,6 @@ func (c *Client) Publish(queue_name string, body string) error {
 
 }
 
-func (c *Client) Subscribe()
 
 func DeclareAndBind(
 	conn *amqp.Connection,
