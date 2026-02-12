@@ -36,6 +36,11 @@
             go version
             templ --version
             alias tgr='templ generate && go run cmd/web/main.go'
+            alias k='kubectl'
+            alias kgp='kubectl get pods'
+            echo "Commands:"
+            echo "RabbitMQ: kubectl port-forward service/portfolio-rabbitmq-service 5672:5672"
+            echo "Website: kubectl port-forward service/portfolio-service 8000:80"
           '';
         };
       }

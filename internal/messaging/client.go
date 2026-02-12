@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	conn *amqp.Connection
+	Conn *amqp.Connection
 }
 
 func NewClient(url string) (*Client, error) {
@@ -17,47 +17,15 @@ func NewClient(url string) (*Client, error) {
 	}
 
 	client := Client{
-		conn: connection,
+		Conn: connection,
 	}
 
 	return &client, nil
 }
 
 func (c *Client) Close() error {
-	return c.conn.Close()
+	return c.Conn.Close()
 }
-
-func (c *Client) Publish(queue_name string, body string) error {
-	channel, _, err := DeclareAndBind(
-		c.conn, 
-		routing.ExchangePortfoilioTopic,
-		queue_name, 
-		queue_name + ".*", 
-		routing.Durable,
-	)
-	if err != nil {
-		return err
-	}
-	defer channel.Close()
-
-	err = channel.Publish(
-		routing.ExchangePortfoilioTopic,
-		queue_name+".*",
-		false, //mandatory
-		false, //immediate
-		amqp.Publishing{
-			ContentType: "text/plain",
-			Body: []byte(body),
-		},
-	)
-	if err != nil {
-		return fmt.Errorf("[WARNING] Failed to publish message: %w", err)
-	}
-
-	return nil
-
-}
-
 
 func DeclareAndBind(
 	conn *amqp.Connection,

@@ -3,17 +3,21 @@ package server
 import (
 	"log"
 	"net/http"
+	"time"
+
 	"github.com/a-h/templ"
-	"github.com/erlint1212/portfolio/internal/views"
 	"github.com/erlint1212/portfolio/internal/messaging"
+	"github.com/erlint1212/portfolio/internal/routing"
+	"github.com/erlint1212/portfolio/internal/views"
 )
 
 type Server struct {
-	Addr string
-	client *messaging.Client
+	Addr      string
+	Client    *messaging.Client
+	Publisher *messaging.Publisher 
 }
 
-func  addGodotHeaders(next http.Handler) http.Handler {
+func addGodotHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
 		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
@@ -21,17 +25,22 @@ func  addGodotHeaders(next http.Handler) http.Handler {
 	})
 }
 
-func (s *Server) handlerUserStartGame() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if s.client != nil {
-			err := s.client.Publish("game_events", "User started RPG Game")
-			if err != nil {
-				log.Printf("Failed to publish event: %v", err)
-			}
+func (s *Server) handlerUserStartGame(w http.ResponseWriter, r *http.Request) {
+	if s.Publisher != nil {
+		msg := "User started RPG Game"
+		gl := routing.GameLog{
+			CurrentTime: time.Now(),
+			Message:     msg,
 		}
-
-		templ.Handler(views.GameView("/assets/games/rpg/index.html")).ServeHTTP(w, r)
+		err := s.Publisher.PublishGameLog(r.Context(), gl)
+		if err != nil {
+			log.Printf("Failed to publish event: %v", err)
+		}
+	} else {
+		log.Println("[WARNING] Publisher is nil, skipping log.")
 	}
+
+	templ.Handler(views.GameView("/assets/games/rpg/index.html")).ServeHTTP(w, r)
 }
 
 func (s *Server) RegisterRoutes() http.Handler {
@@ -39,39 +48,30 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	home_component := views.Home("Apprentice")
 	projects_component := views.ProjectList()
-	
+
 	mux.Handle("/", templ.Handler(home_component))
 	mux.Handle("/projects", templ.Handler(projects_component))
 
 	file_server := http.FileServer(http.Dir("./assets"))
-	mux.Handle("/assets/", http.StripPrefix("/assets/", addGodotHeaders(file_server)))
+	mux.Handle("/assets/", http.StripPrefix("/assets/",
+		addGodotHeaders(file_server)))
 
-	mux.Handle("/games/rpg", s.handlerUserStartGame())
+	mux.HandleFunc("/games/rpg", s.handlerUserStartGame)
 
 	return mux
 }
 
-func NewServer() (*Server, *messaging.Client) {
-	const port = "8000"
-	const amqpURL = "amqp://guest:guest@localhost:5672/"
-
-	client, err := messaging.NewClient(amqpURL)
-	if err != nil {
-		log.Printf("[WARNING] Could not connect to RabbitMQ: %v", err)
+func NewServer(addr string, client *messaging.Client, pub *messaging.Publisher) *Server {
+	return &Server{
+		Addr:      addr,
+		Client:    client,
+		Publisher: pub,
 	}
-	
-	srv := &Server{
-		Addr:		":" + port,
-		client:		client,
-	}
-
-	return srv, client
-
 }
 
 func (s *Server) ListenAndServe() error {
 	srv := &http.Server{
-		Addr: s.Addr,
+		Addr:    s.Addr,
 		Handler: s.RegisterRoutes(),
 	}
 	return srv.ListenAndServe()

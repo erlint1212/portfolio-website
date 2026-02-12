@@ -1,8 +1,12 @@
 package routing
 
 const (
-	ExchangePortfoilioDirect = "portfolio_direct"
-	ExchangePortfoilioTopic  = "portfolio_topic"
+	GameLogSlug = "game_logs"
+)
+
+const (
+	ExchangePortfolioDirect = "portfolio_direct"
+	ExchangePortfolioTopic  = "portfolio_topic"
 )
 
 type SimpleQueueType int
