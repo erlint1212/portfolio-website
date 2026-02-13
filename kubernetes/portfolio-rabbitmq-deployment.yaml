@@ -15,11 +15,18 @@ spec:
         app: portfolio-rabbitmq-managment
     spec:
       containers:
-        - image: rabbitmq:3.12-management
-          name: portfolio-rabbitmq-managment
+        - name: portfolio-rabbitmq-managment
+          image: rabbitmq:3.12-management
           imagePullPolicy: IfNotPresent
           resources: {}
           envFrom:
             - configMapRef:
                 name: portfolio-rabbitmq-managment-configmap
+          volumeMounts:
+            - name: rabbitmq-storage
+              mountPath: /var/lib/rabbitmq
+      volumes:
+        - name: rabbitmq-storage
+          persistentVolumeClaim:
+            claimName: rabbitmq-pvc
 

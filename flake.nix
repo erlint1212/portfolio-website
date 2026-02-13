@@ -38,9 +38,10 @@
             templ --version
             alias tgr='templ generate && tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css && go run cmd/web/main.go'
             alias k='kubectl'
+            alias tailcomp='tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css'
             alias kgp='kubectl get pods'
             echo "Commands:"
-            echo "Tailwind CSS: tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css"
+            echo "Tailwind CSS (alias tailcomp): tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css"
             echo "RabbitMQ: kubectl port-forward service/portfolio-rabbitmq-service 5672:5672"
             echo "Website: kubectl port-forward service/portfolio-service 8000:80"
           '';
