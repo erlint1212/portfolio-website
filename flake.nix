@@ -20,6 +20,7 @@
             kubectl
             minikube
             rabbitmq-server
+            tailwindcss
 
             python313Packages.pathspec
             
@@ -35,10 +36,11 @@
             echo "------------------------------------------------"
             go version
             templ --version
-            alias tgr='templ generate && go run cmd/web/main.go'
+            alias tgr='templ generate && tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css && go run cmd/web/main.go'
             alias k='kubectl'
             alias kgp='kubectl get pods'
             echo "Commands:"
+            echo "Tailwind CSS: tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css"
             echo "RabbitMQ: kubectl port-forward service/portfolio-rabbitmq-service 5672:5672"
             echo "Website: kubectl port-forward service/portfolio-service 8000:80"
           '';
