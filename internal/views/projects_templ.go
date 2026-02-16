@@ -8,7 +8,7 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func ProjectsPage() templ.Component {
+func ProjectList() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,7 +29,7 @@ func ProjectsPage() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = Base("Projects", ProjectsList(), "/projects").Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl fade-in\"><div class=\"flex items-baseline justify-between mb-8 border-b border-gray-200 pb-4\"><h2 class=\"text-xl font-medium\">Selected Engineering Work</h2><span class=\"font-mono text-xs text-gray-400\">03 Items</span></div><div class=\"grid grid-cols-1 gap-6\"><div class=\"spec-card group relative\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">High-Performance Portfolio</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/infrastructure/web</div></div><a href=\"https://github.com/erlint1212/portfolio-website\" target=\"_blank\" class=\"text-xs font-mono underline hover:text-gray-600\">source_code</a></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A distributed system serving this website. Built to demonstrate <strong>infrastructure-as-code</strong> and network optimization. Features a sub-14kB initial TCP payload for maximum speed.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">Go</span> <span class=\"tech-badge\">Templ</span> <span class=\"tech-badge\">Tailwind</span> <span class=\"tech-badge\">HTMX</span> <span class=\"tech-badge\">RabbitMQ</span></div></div><div class=\"spec-card group\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">Event Bus Architecture</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/backend/messaging</div></div><div class=\"w-2 h-2 bg-emerald-500 rounded-full animate-pulse\" title=\"Live System\"></div></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">Implementation of the AMQP protocol using RabbitMQ. Handles decoupling of services via Topic Exchanges.  Includes a durable queue setup for message persistence.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">RabbitMQ</span> <span class=\"tech-badge\">Event Sourcing</span> <span class=\"tech-badge\">Concurrency</span></div></div><div class=\"spec-card group\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">WASM Physics Engine</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/experimental/graphics</div></div><button hx-get=\"/games/rpg\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" class=\"text-xs border border-black px-3 py-1 hover:bg-black hover:text-white transition-colors uppercase font-medium tracking-wide\">Launch Interactive</button></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A physics sandbox compiled to WebAssembly. Demonstrates the capability of running non-JS code (Godot/C++) in the browser context with near-native performance.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">WebAssembly</span> <span class=\"tech-badge\">Godot 4</span> <span class=\"tech-badge\">Physics</span></div></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -37,7 +37,7 @@ func ProjectsPage() templ.Component {
 	})
 }
 
-func ProjectsList() templ.Component {
+func ProjectListHTMX() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -58,7 +58,40 @@ func ProjectsList() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 fade-in\"><div class=\"group bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col\"><div class=\"h-48 bg-slate-900 relative overflow-hidden\"><div class=\"absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]\"></div><div class=\"absolute inset-0 flex items-center justify-center\"><span class=\"text-4xl\">🎮</span></div></div><div class=\"p-6 flex-grow flex flex-col\"><div class=\"flex gap-2 mb-3\"><span class=\"px-2 py-1 bg-blue-50 text-blue-700 text-xs font-mono rounded\">Godot</span> <span class=\"px-2 py-1 bg-orange-50 text-orange-700 text-xs font-mono rounded\">WASM</span></div><h3 class=\"font-bold text-lg mb-2 group-hover:text-indigo-600 transition-colors\">Masked Platformer</h3><p class=\"text-slate-500 text-sm mb-4 flex-grow\">A physics-based platformer compiled to WebAssembly. Demonstrates high-performance browser integration and rigid body physics.</p><button hx-get=\"/games/rpg\" hx-target=\"#project-section\" hx-swap=\"innerHTML\" class=\"mt-auto w-full py-2 px-4 bg-slate-50 text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 border border-slate-200 transition-colors\">Launch Instance &rarr;</button></div></div><div class=\"group bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col\"><div class=\"h-48 bg-slate-50 border-b border-slate-100 p-6 flex flex-col justify-center font-mono text-xs text-slate-600\"><div class=\"mb-1 text-green-600\">$ kubectl get pods</div><div class=\"pl-2\">NAME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; STATUS</div><div class=\"pl-2\">portfolio-web &nbsp; Running</div><div class=\"pl-2\">rabbitmq-0 &nbsp;&nbsp;&nbsp;&nbsp; Running</div></div><div class=\"p-6 flex-grow flex flex-col\"><div class=\"flex gap-2 mb-3\"><span class=\"px-2 py-1 bg-cyan-50 text-cyan-700 text-xs font-mono rounded\">Go</span> <span class=\"px-2 py-1 bg-blue-50 text-blue-700 text-xs font-mono rounded\">Kubernetes</span> <span class=\"px-2 py-1 bg-gray-100 text-gray-700 text-xs font-mono rounded\">Nix</span></div><h3 class=\"font-bold text-lg mb-2\">High-Performance Portfolio</h3><p class=\"text-slate-500 text-sm mb-4 flex-grow\">Self-hosted distributed system. Optimized for sub-14kB TCP Slow Start. Reproducible build environment using Nix Flakes.</p><a href=\"https://github.com/erlint1212/portfolio-website\" target=\"_blank\" class=\"mt-auto block text-center w-full py-2 px-4 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 transition-colors\">View Source</a></div></div><div class=\"group bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col\"><div class=\"h-48 bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center\"><span class=\"text-4xl opacity-75\">⚡</span></div><div class=\"p-6 flex-grow flex flex-col\"><div class=\"flex gap-2 mb-3\"><span class=\"px-2 py-1 bg-red-50 text-red-700 text-xs font-mono rounded\">RabbitMQ</span> <span class=\"px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-mono rounded\">Event Sourcing</span></div><h3 class=\"font-bold text-lg mb-2\">Distributed Chat / Event Bus</h3><p class=\"text-slate-500 text-sm mb-4 flex-grow\">Real-time messaging system using RabbitMQ for event sourcing. Handles concurrent WebSocket connections via Go routines.</p><div class=\"mt-auto w-full py-2 px-4 bg-slate-50 text-slate-400 font-medium rounded-lg border border-slate-200 text-center text-sm cursor-not-allowed\">Backend Active</div></div></div></div>")
+		templ_7745c5c3_Err = ProjectList().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = SidebarNav("/projects", true).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func ProjectsPage() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = Base("Engineering", ProjectList(), "/projects").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -82,25 +115,25 @@ func GameView(gamePath string) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var3 == nil {
-			templ_7745c5c3_Var3 = templ.NopComponent
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"bg-slate-900 rounded-xl overflow-hidden shadow-2xl animate-fade-in relative ring-1 ring-slate-700\"><div class=\"absolute top-4 right-4 z-10\"><button hx-get=\"/projects\" hx-target=\"#project-section\" hx-swap=\"innerHTML\" class=\"bg-black/60 hover:bg-red-600 text-white px-3 py-1 rounded-full backdrop-blur-sm transition-colors text-sm font-medium border border-white/10\" title=\"Close Game Session\">✕ Close</button></div><div class=\"aspect-video w-full\"><iframe src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"h-full flex flex-col animate-fade-in max-w-5xl mx-auto\"><div class=\"flex justify-between items-center mb-6 border-b border-gray-200 pb-4\"><div><h2 class=\"text-lg font-bold\">Interactive Session</h2><div class=\"font-mono text-xs text-gray-500\">Instance: WASM_Container_01</div></div><button hx-get=\"/projects\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" class=\"text-xs text-red-600 hover:text-red-800 font-medium underline\">Close Session</button></div><div class=\"aspect-video w-full bg-black shadow-xl border border-gray-900\"><iframe src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(gamePath)
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(gamePath)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 97, Col: 34}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 108, Col: 30}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"w-full h-full\" frameborder=\"0\" allow=\"autoplay; fullscreen; audio\"></iframe></div><div class=\"bg-slate-800 p-4 flex justify-between items-center border-t border-slate-700\"><div class=\"flex items-center gap-3\"><div class=\"text-white text-sm font-medium\">Masked Platformer</div><span class=\"bg-slate-700 text-slate-300 text-xs px-2 py-0.5 rounded\">WASM</span></div><span class=\"text-emerald-400 text-xs flex items-center gap-2 font-mono\"><span class=\"w-2 h-2 bg-emerald-400 rounded-full animate-pulse\"></span> <span class=\"tracking-wide uppercase\">System Online</span></span></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"w-full h-full\" frameborder=\"0\"></iframe></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

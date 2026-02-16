@@ -7,47 +7,70 @@ templ Home(title string) {
 templ homeContent() {
     @HtmxIndicator()
     
-    <section class="mb-20 pt-8 animate-fade-in">
-        <div class="max-w-3xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold uppercase tracking-wide mb-6 border border-indigo-100">
-                <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                Open to Opportunities
-            </div>
-            
-            <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-                Data Scientist & <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-                    Backend Engineer
-                </span>
+    <div class="max-w-2xl fade-in">
+        <header class="mb-12">
+            <h1 class="text-3xl md:text-4xl font-semibold mb-6 leading-tight">
+                Backend Engineer specializing in <br/>
+                <span class="text-gray-500">Distributed Systems & Data Pipelines.</span>
             </h1>
-            
-            <p class="text-xl text-slate-600 leading-relaxed mb-8 max-w-2xl">
-                MSc graduate specializing in <strong>Distributed Systems</strong> and <strong>Data Pipelines</strong>. 
-                I bridge the gap between statistical modeling and production-grade infrastructure using Go, Python, and Kubernetes.
+            <p class="text-lg text-gray-600 leading-relaxed">
+                I build fault-tolerant infrastructure and high-performance data tools. 
+                Currently bridging the gap between <strong class="text-black font-medium">Statistical Modeling</strong> (MSc) and <strong class="text-black font-medium">Systems Engineering</strong> (Go/K8s).
             </p>
+        </header>
 
-            <div class="flex flex-wrap gap-4">
-                <button 
-                    hx-get="/projects" 
-                    hx-target="#project-section" 
-                    hx-swap="innerHTML"
-                    class="bg-slate-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                >
-                    View Engineering Projects
-                </button>
-                <a 
-                    href="mailto:ETN_work@proton.me" 
-                    class="px-6 py-3 rounded-lg font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
-                >
-                    Contact Me
-                </a>
+        <hr class="border-gray-200 mb-12"/>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+                <h3 class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">Core Technology</h3>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                        <span class="font-medium">Python</span>
+                        <span class="font-mono text-xs text-gray-400">Backend</span>
+                    </li>
+                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                        <span class="font-medium">Go (Golang)</span>
+                        <span class="font-mono text-xs text-gray-400">Backend</span>
+                    </li>
+                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                        <span class="font-medium">Nix / NixOS</span>
+                        <span class="font-mono text-xs text-gray-400">Infra</span>
+                    </li>
+                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                        <span class="font-medium">Docker</span>
+                        <span class="font-mono text-xs text-gray-400">Orchestration</span>
+                    </li>
+                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                        <span class="font-medium">Kubernetes</span>
+                        <span class="font-mono text-xs text-gray-400">Orchestration</span>
+                    </li>
+                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                        <span class="font-medium">RabbitMQ</span>
+                        <span class="font-mono text-xs text-gray-400">Messaging</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">Focus Areas</h3>
+                 <ul class="space-y-3 text-sm text-gray-600">
+                    <li>→ <strong>Event-Driven Architecture:</strong> Designing systems that scale horizontally.</li>
+                    <li>→ <strong>Reproducibility:</strong> Eliminating "it works on my machine" with Nix.</li>
+                    <li>→ <strong>Data Engineering:</strong> ETL pipelines for heavy ML workloads.</li>
+                </ul>
+                <div class="mt-8">
+                    <button 
+                        hx-get="/projects" 
+                        hx-target="#main-viewport" 
+                        hx-swap="innerHTML"
+                        hx-push-url="true"
+                        class="text-sm font-medium border-b border-black hover:border-gray-400 transition-colors pb-0.5"
+                        >
+                            View Engineering Projects →
+                    </button>
+                </div>
             </div>
         </div>
-    </section>
-
-    <div class="border-t border-slate-100 my-12"></div>
-
-    <div id="project-section" class="scroll-mt-24 min-h-[400px]">
-        @ProjectsList()
     </div>
 }

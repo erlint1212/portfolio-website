@@ -45,7 +45,7 @@ func (s *Server) handlerUserStartGame(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) handlerProjects(w http.ResponseWriter, r *http.Request) {
     if r.Header.Get("HX-Request") == "true" {
-        templ.Handler(views.ProjectsList()).ServeHTTP(w, r)
+        templ.Handler(views.ProjectListHTMX()).ServeHTTP(w, r)
     } else {
         templ.Handler(views.ProjectsPage()).ServeHTTP(w, r)
     }
