@@ -29,7 +29,7 @@ func Home(title string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = Base("home", homeContent()).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Base(title, homeContent(), "/").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -62,11 +62,11 @@ func homeContent() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"mb-16 text-center sm:text-left\"><h1 class=\"text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4\">Welcome to my <span class=\"text-indigo-600\">portfolio</span><br>page!</h1><p class=\"text-xl text-slate-600 max-w-2xl leading-relaxed mb-8\">I am a full-stack engineer exploring the intersection of distributed systems, game development, and minimalist web architecture.</p><div class=\"flex gap-4 justify-center sm:justify-start\"><button hx-get=\"/projects\" hx-target=\"#project-section\" hx-swap=\"innerHTML\" class=\"bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5\">View Work</button> <a href=\"mailto:contact@example.com\" class=\"px-6 py-3 rounded-lg font-semibold text-slate-700 hover:bg-slate-100 border border-slate-200 transition-all\">Contact Me</a></div></section><div id=\"project-section\" class=\"scroll-mt-20\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section class=\"mb-20 pt-8 animate-fade-in\"><div class=\"max-w-3xl\"><div class=\"inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold uppercase tracking-wide mb-6 border border-indigo-100\"><span class=\"w-2 h-2 rounded-full bg-indigo-600 animate-pulse\"></span> Open to Opportunities</div><h1 class=\"text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight\">Data Scientist & <br><span class=\"text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600\">Backend Engineer</span></h1><p class=\"text-xl text-slate-600 leading-relaxed mb-8 max-w-2xl\">MSc graduate specializing in <strong>Distributed Systems</strong> and <strong>Data Pipelines</strong>.  I bridge the gap between statistical modeling and production-grade infrastructure using Go, Python, and Kubernetes.</p><div class=\"flex flex-wrap gap-4\"><button hx-get=\"/projects\" hx-target=\"#project-section\" hx-swap=\"innerHTML\" class=\"bg-slate-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5\">View Engineering Projects</button> <a href=\"mailto:ETN_work@proton.me\" class=\"px-6 py-3 rounded-lg font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm\">Contact Me</a></div></div></section><div class=\"border-t border-slate-100 my-12\"></div><div id=\"project-section\" class=\"scroll-mt-24 min-h-[400px]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = ProjectList().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = ProjectsList().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

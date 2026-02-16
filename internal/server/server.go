@@ -43,18 +43,24 @@ func (s *Server) handlerUserStartGame(w http.ResponseWriter, r *http.Request) {
 	templ.Handler(views.GameView("/assets/games/rpg/index.html")).ServeHTTP(w, r)
 }
 
+func (s *Server) handlerProjects(w http.ResponseWriter, r *http.Request) {
+    if r.Header.Get("HX-Request") == "true" {
+        templ.Handler(views.ProjectsList()).ServeHTTP(w, r)
+    } else {
+        templ.Handler(views.ProjectsPage()).ServeHTTP(w, r)
+    }
+}
+
 func (s *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
-	home_component := views.Home("Apprentice")
-	projects_component := views.ProjectList()
+	home_component := views.Home("Portfolio Page")
 
 	mux.Handle("/", templ.Handler(home_component))
-	mux.Handle("/projects", templ.Handler(projects_component))
+	mux.HandleFunc("/projects", s.handlerProjects)
 
 	file_server := http.FileServer(http.Dir("./assets"))
-	mux.Handle("/assets/", http.StripPrefix("/assets/",
-		addGodotHeaders(file_server)))
+	mux.Handle("/assets/", http.StripPrefix("/assets/", addGodotHeaders(file_server)))
 
 	mux.HandleFunc("/games/rpg", s.handlerUserStartGame)
 

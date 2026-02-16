@@ -8,7 +8,15 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Base(title string, content templ.Component) templ.Component {
+func navLinkClass(isActive bool) string {
+	base := "text-sm font-medium transition-colors duration-200"
+	if isActive {
+		return base + " text-indigo-600 font-bold border-b-2 border-indigo-600"
+	}
+	return base + " text-slate-600 hover:text-indigo-600"
+}
+
+func Base(title string, content templ.Component, currentPath string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,20 +37,20 @@ func Base(title string, content templ.Component) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><title>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\" class=\"scroll-smooth\"><head><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/layout.templ`, Line: 8, Col: 22}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/layout.templ`, Line: 15, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\"><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " | Erling's Portfolio</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"description\" content=\"Portfolio of Erling Tennøy Nordtvedt - Data Science & Backend Engineering. Specializing in Go, Distributed Systems, and ML Pipelines.\"><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +58,51 @@ func Base(title string, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</head><body class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col\"><header class=\"bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10\"><div class=\"max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between\"><div class=\"flex items-center gap-2\"><div class=\"w-3 h-3 rounded-full bg-indigo-600\"></div><span class=\"font-bold text-lg tracking-tight\">Portfolio</span></div><nav class=\"flex gap-6 text-sm font-medium text-slate-600\"><a href=\"/\" class=\"hover:text-indigo-600 transition-colors\">Home</a> <a href=\"/projects\" class=\"hover:text-indigo-600 transition-colors\">Projects</a> <a href=\"https://github.com/erlint1212\" target=\"_blank\" class=\"hover:text-indigo-600 transition-colors\">GitHub</a></nav></div></header><main class=\"flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</head><body class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col\"><a href=\"#main-content\" class=\"sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-indigo-600 text-white p-4 rounded-md z-50\">Skip to main content</a><header class=\"bg-white/90 backdrop-blur-sm border-b border-slate-200 shadow-sm sticky top-0 z-40 transition-all\"><div class=\"max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between\"><a href=\"/\" class=\"flex items-center gap-2 group\"><div class=\"w-3 h-3 rounded-full bg-indigo-600 group-hover:scale-125 transition-transform\"></div><span class=\"font-bold text-lg tracking-tight group-hover:text-indigo-700\">ETN.dev</span></a><nav class=\"flex gap-6\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 = []any{navLinkClass(currentPath == "/")}
+		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var3...)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a href=\"/\" class=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var3).String())
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/layout.templ`, Line: 1, Col: 0}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\">Home</a> ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 = []any{navLinkClass(currentPath == "/projects")}
+		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var5...)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<a href=\"/projects\" class=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var5).String())
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/layout.templ`, Line: 1, Col: 0}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\">Engineering</a> <a href=\"https://github.com/erlint1212\" target=\"_blank\" class=\"text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-1\">GitHub <span class=\"text-xs\">↗</span></a></nav></div></header><main id=\"main-content\" class=\"flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -58,7 +110,7 @@ func Base(title string, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</main><footer class=\"border-t border-slate-200 bg-white py-8 mt-auto\"><div class=\"max-w-5xl mx-auto px-4 text-center text-slate-400 text-sm\">&copy; 2026 Erling. Built with Go, HTMX, & Tailwind.</div></footer></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</main><footer class=\"border-t border-slate-200 bg-white py-8 mt-auto\"><div class=\"max-w-5xl mx-auto px-4 text-center text-slate-500 text-sm flex flex-col gap-2\"><p>&copy; 2026 Erling Tennøy Nordtvedt.</p><p class=\"text-xs text-slate-400\">Built with <span class=\"font-mono text-indigo-500\">Go + Templ + HTMX + Nix</span>.<span title=\"Optimized for speed\">TCP Slow Start Optimized.</span></p></div></footer></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

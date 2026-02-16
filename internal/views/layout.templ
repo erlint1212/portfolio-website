@@ -1,42 +1,62 @@
 package views
 
+func navLinkClass(isActive bool) string {
+    base := "text-sm font-medium transition-colors duration-200"
+    if isActive {
+        return base + " text-indigo-600 font-bold border-b-2 border-indigo-600"
+    }
+    return base + " text-slate-600 hover:text-indigo-600"
+}
 
-templ Base(title string, content templ.Component) {
+templ Base(title string, content templ.Component, currentPath string) {
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="en" class="scroll-smooth">
     <head>
-        <title>{ title }</title>
+        <title>{ title } | Erling's Portfolio</title>
         <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, inital-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="Portfolio of Erling Tennøy Nordtvedt - Data Science & Backend Engineering. Specializing in Go, Distributed Systems, and ML Pipelines."/>
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
         @templ.Raw("<style>" + UnsafeLoadCSS() + "</style>")
     </head>
     <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col">
         
-        <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-indigo-600 text-white p-4 rounded-md z-50">
+            Skip to main content
+        </a>
+
+        <header class="bg-white/90 backdrop-blur-sm border-b border-slate-200 shadow-sm sticky top-0 z-40 transition-all">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-indigo-600"></div>
-                    <span class="font-bold text-lg tracking-tight">Portfolio</span>
-                </div>
-                <nav class="flex gap-6 text-sm font-medium text-slate-600">
-                    <a href="/" class="hover:text-indigo-600 transition-colors">Home</a>
-                    <a href="/projects" class="hover:text-indigo-600 transition-colors">Projects</a>
-                    <a href="https://github.com/erlint1212" target="_blank" class="hover:text-indigo-600 transition-colors">GitHub</a>
+                <a href="/" class="flex items-center gap-2 group">
+                    <div class="w-3 h-3 rounded-full bg-indigo-600 group-hover:scale-125 transition-transform"></div>
+                    <span class="font-bold text-lg tracking-tight group-hover:text-indigo-700">ETN.dev</span>
+                </a>
+                
+                <nav class="flex gap-6">
+                    <a href="/" class={ navLinkClass(currentPath == "/") }>Home</a>
+                    <a href="/projects" class={ navLinkClass(currentPath == "/projects") }>Engineering</a>
+                    <a href="https://github.com/erlint1212" target="_blank" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-1">
+                        GitHub
+                        <span class="text-xs">↗</span>
+                    </a>
                 </nav>
             </div>
         </header>
 
-        <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <main id="main-content" class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
             @content
         </main>
 
         <footer class="border-t border-slate-200 bg-white py-8 mt-auto">
-            <div class="max-w-5xl mx-auto px-4 text-center text-slate-400 text-sm">
-                &copy; 2026 Erling. Built with Go, HTMX, & Tailwind.
+            <div class="max-w-5xl mx-auto px-4 text-center text-slate-500 text-sm flex flex-col gap-2">
+                <p>&copy; 2026 Erling Tennøy Nordtvedt.</p> 
+                <p class="text-xs text-slate-400">
+                    Built with <span class="font-mono text-indigo-500">Go + Templ + HTMX + Tailwind</span>.
+                    // Highlighting the TCP optimization
+                    <span title="Optimized for speed">TCP Slow Start Optimized.</span>
+                </p>
             </div>
         </footer>
-
     </body>
     </html>
 }
