@@ -6,6 +6,29 @@ templ Home(title string) {
 
 templ homeContent() {
     @HtmxIndicator()
-    <h1>Welcome to my portfoilio page!</h1>
-    @ProjectList()
+    <section class="mb-16 text-center sm:text-left">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+            Welcome to my <span class="text-indigo-600">portfolio</span> <br/> page!
+        </h1>
+        <p class="text-xl text-slate-600 max-w-2xl leading-relaxed mb-8">
+            I am a full-stack engineer exploring the intersection of distributed systems, game development, and minimalist web architecture.
+        </p>
+        <div class="flex gap-4 justify-center sm:justify-start">
+            <button 
+                hx-get="/projects" 
+                hx-target="#project-section" 
+                hx-swap="innerHTML"
+                class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+                View Work
+            </button>
+            <a href="mailto:contact@example.com" class="px-6 py-3 rounded-lg font-semibold text-slate-700 hover:bg-slate-100 border border-slate-200 transition-all">
+                Contact Me
+            </a>
+        </div>
+    </section>
+
+    <div id="project-section" class="scroll-mt-20">
+        @ProjectList()
+    </div>
 }

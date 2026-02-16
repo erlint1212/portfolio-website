@@ -36,13 +36,21 @@ func Base(title string, content templ.Component) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/layout.templ`, Line: 7, Col: 22}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/layout.templ`, Line: 8, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script><link href=\"/assets/css/output.css\" rel=\"stylesheet\"></head><body class=\"bg-gray-500 text-gray-900 font-sans\"><main class=\"max-w-4xl mx-auto p-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\"><script src=\"https://unpkg.com/htmx.org@1.9.10\"></script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.Raw("<style>"+UnsafeLoadCSS()+"</style>").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</head><body class=\"bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col\"><header class=\"bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10\"><div class=\"max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between\"><div class=\"flex items-center gap-2\"><div class=\"w-3 h-3 rounded-full bg-indigo-600\"></div><span class=\"font-bold text-lg tracking-tight\">Portfolio</span></div><nav class=\"flex gap-6 text-sm font-medium text-slate-600\"><a href=\"/\" class=\"hover:text-indigo-600 transition-colors\">Home</a> <a href=\"/projects\" class=\"hover:text-indigo-600 transition-colors\">Projects</a> <a href=\"https://github.com/erlint1212\" target=\"_blank\" class=\"hover:text-indigo-600 transition-colors\">GitHub</a></nav></div></header><main class=\"flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +58,7 @@ func Base(title string, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</main></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</main><footer class=\"border-t border-slate-200 bg-white py-8 mt-auto\"><div class=\"max-w-5xl mx-auto px-4 text-center text-slate-400 text-sm\">&copy; 2026 Erling. Built with Go, HTMX, & Tailwind.</div></footer></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

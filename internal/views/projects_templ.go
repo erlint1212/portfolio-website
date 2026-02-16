@@ -29,7 +29,7 @@ func ProjectList() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"game-container\"><ul><li><button hx-get=\"/games/rpg\" hx-target=\"#game-container\" hx-swap=\"innerHTML\" class=\"button\">Masked Platformer Game</button></li><li>Portfolio</li><li>Chat App</li></ul></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in\"><div class=\"group bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-indigo-200\"><div class=\"h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center\"><span class=\"text-white text-4xl opacity-75\">🎮</span></div><div class=\"p-6\"><h3 class=\"font-bold text-lg mb-2 group-hover:text-indigo-600 transition-colors\">Masked Platformer</h3><p class=\"text-slate-500 text-sm mb-4\">A Godot-based platformer compiled to WebAssembly. Features rigid body physics and dynamic lighting.</p><button hx-get=\"/games/rpg\" hx-target=\"#project-section\" hx-swap=\"innerHTML\" class=\"w-full py-2 px-4 bg-slate-50 text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors\">Play Now &rarr;</button></div></div><div class=\"bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all\"><div class=\"w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 text-emerald-600 text-xl\">⚡</div><h3 class=\"font-bold text-lg mb-2\">High-Performance Portfolio</h3><p class=\"text-slate-500 text-sm\">You are looking at it. Built with Go, Templ, HTMX, and Tailwind. Optimized for sub-14kB TCP Slow Start.</p></div><div class=\"bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all\"><div class=\"w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4 text-amber-600 text-xl\">💬</div><h3 class=\"font-bold text-lg mb-2\">Distributed Chat</h3><p class=\"text-slate-500 text-sm\">Real-time messaging system using RabbitMQ for event sourcing and Go for concurrent websocket handling.</p></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -37,7 +37,7 @@ func ProjectList() templ.Component {
 	})
 }
 
-func GameView(game_path string) templ.Component {
+func GameView(gamePath string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -58,20 +58,20 @@ func GameView(game_path string) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"game-container\"><iframe src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"bg-slate-900 rounded-xl overflow-hidden shadow-2xl animate-fade-in relative\"><div class=\"absolute top-4 right-4 z-10\"><button hx-get=\"/projects\" hx-target=\"#project-section\" hx-swap=\"outerHTML\" class=\"bg-black/50 hover:bg-red-600 text-white p-2 rounded-full backdrop-blur-sm transition-colors\" title=\"Close Game\">✕</button></div><div class=\"aspect-video w-full\"><iframe src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(game_path)
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(gamePath)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 19, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 54, Col: 34}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" width=\"800\" height=\"600\" frameborder=\"0\"></iframe><br><button hx-get=\"/projects\" hx-target=\"#game-container\" hx-swap=\"outerHTML\">Back to List</button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"w-full h-full\" frameborder=\"0\"></iframe></div><div class=\"bg-slate-800 p-4 flex justify-between items-center\"><div class=\"text-white text-sm font-medium\">Masked Platformer (WASM)</div><span class=\"text-emerald-400 text-xs flex items-center gap-1\"><span class=\"w-2 h-2 bg-emerald-400 rounded-full animate-pulse\"></span> Live</span></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
