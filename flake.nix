@@ -20,7 +20,8 @@
             kubectl
             minikube
             rabbitmq-server
-            tailwindcss
+            # tailwindcss
+            tailwindcss_4
 
             python313Packages.pathspec
             
@@ -36,9 +37,9 @@
             echo "------------------------------------------------"
             go version
             templ --version
-            alias tgr='templ generate && tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css && go run cmd/web/main.go'
             alias k='kubectl'
-            alias tailcomp='tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css'
+            alias tgr='templ generate && tailwindcss -i ./internal/assets/css/input.css -o ./internal/views/css/output.css && go run cmd/web/main.go'
+            alias tailcomp='tailwindcss -i ./internal/assets/css/input.css -o ./internal/views/css/output.css'
             alias kgp='kubectl get pods'
             echo "Commands:"
             echo "Tailwind CSS (alias tailcomp): tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css"

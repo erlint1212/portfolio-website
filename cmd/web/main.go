@@ -14,7 +14,7 @@ import (
 
 func main() {
 	const amqpURL = "amqp://guest:guest@localhost:5672/"
-	const port = ":8001"
+	const port = ":8002"
 
 	client, err := messaging.NewClient(amqpURL)
 	if err != nil {
