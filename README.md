@@ -48,7 +48,7 @@ graph LR
     %% Dev & Admin Operations
     Dev -->|SSH| SSH
     Dev -->|kubectl / image load| K3s
-    SSH -.->|Protects| Fail2Ban
+    Fail2Ban -.->|Protects| SSH
 
     %% Styling Definitions
     classDef host fill:#1a1a2e,stroke:#e94560,stroke-width:2px,color:#fff,rx:10,ry:10;
