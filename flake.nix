@@ -18,6 +18,8 @@
             templ
             docker
             kubectl
+            sshfs              # Mount ThinkPad files locally if needed
+            k9s
             minikube
             rabbitmq-server
             # tailwindcss

@@ -27,3 +27,5 @@ result-*
 *.bak
 project_context.txt
 context_builder.py
+
+/server-config/
