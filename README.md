@@ -131,5 +131,3 @@ The ThinkPad runs **NixOS 25.11 Minimal** with a fully declarative `configuratio
 - **fail2ban** enabled — brute-force SSH protection
 - **Neovim** as the default editor with system-level LSPs and formatters (Mason doesn't work on NixOS)
 - **Norwegian keyboard layout** configured at the console level
-
-**Built and self-hosted in Oslo, Norway.**
