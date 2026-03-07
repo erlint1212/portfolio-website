@@ -10,23 +10,33 @@ The result is a portfolio that runs on a repurposed ThinkPad in my apartment, de
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────┐
-│              ThinkPad E420s (NixOS)              │
-│                                                  │
-│  ┌──────────────┐  ┌─────────────────────────┐  │
-│  │    K3s        │  │   System Services       │  │
-│  │  ┌────────┐   │  │  ┌───────────────────┐  │  │
-│  │  │Portfolio│   │  │  │  FileBrowser       │  │  │
-│  │  │  :8002  │   │  │  │  Quantum           │  │  │
-│  │  └───┬────┘   │  │  └───────────────────┘  │  │
-│  │      │        │  └─────────────────────────┘  │
-│  │  ┌───▼────┐   │                               │
-│  │  │RabbitMQ│   │                               │
-│  │  │  :5672 │   │                               │
-│  │  └────────┘   │                               │
-│  └──────────────┘                                │
-└─────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph ThinkPad["🖥️ ThinkPad E420s — NixOS 25.11"]
+        subgraph K3s["☸ K3s Cluster"]
+            User([👤 User]) -->|HTTP :80| Ingress[Traefik Ingress]
+            Ingress --> Portfolio[Go + Templ + HTMX\nPortfolio :8002]
+            Portfolio -->|Publish Events| RabbitMQ[(RabbitMQ\nAMQP :5672)]
+            RabbitMQ -->|Subscribe| Portfolio
+            Portfolio ---|Serves| Static[Static Assets\nTailwind CSS + Godot Games]
+            FileBrowser[FileBrowser Quantum\n:8080]
+        end
+        subgraph System["⚙️ System Services"]
+            SSH[SSH :22]
+            TLP[TLP Power Management]
+            Fail2Ban[fail2ban]
+        end
+    end
+    Dev([💻 Dev Machine]) -->|SSH + kubectl| SSH
+    Dev -->|docker save / scp| K3s
+
+    style ThinkPad fill:#1a1a2e,stroke:#e94560,color:#eee
+    style K3s fill:#16213e,stroke:#0f3460,color:#eee
+    style System fill:#16213e,stroke:#0f3460,color:#eee
+    style Portfolio fill:#0f3460,stroke:#e94560,color:#eee
+    style RabbitMQ fill:#ff6600,stroke:#cc5200,color:#fff
+    style FileBrowser fill:#0f3460,stroke:#e94560,color:#eee
+    style Ingress fill:#0f3460,stroke:#e94560,color:#eee
 ```
 
 | Component          | Role                                      |
