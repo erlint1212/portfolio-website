@@ -11,32 +11,58 @@ The result is a portfolio that runs on a repurposed ThinkPad in my apartment, de
 ## Architecture
 
 ```mermaid
-graph TD
+graph LR
+    %% External Actors
+    User([👤 User])
+    Dev([💻 Dev Machine])
+
     subgraph ThinkPad["🖥️ ThinkPad E420s — NixOS 25.11"]
-        subgraph K3s["☸ K3s Cluster"]
-            User([👤 User]) -->|HTTP :80| Ingress[Traefik Ingress]
-            Ingress --> Portfolio[Go + Templ + HTMX\nPortfolio :8002]
-            Portfolio -->|Publish Events| RabbitMQ[(RabbitMQ\nAMQP :5672)]
-            RabbitMQ -->|Subscribe| Portfolio
-            Portfolio ---|Serves| Static[Static Assets\nTailwind CSS + Godot Games]
-            FileBrowser[FileBrowser Quantum\n:8080]
-        end
+        
         subgraph System["⚙️ System Services"]
-            SSH[SSH :22]
-            TLP[TLP Power Management]
-            Fail2Ban[fail2ban]
+            SSH["SSH (:22)"]
+            Fail2Ban["fail2ban"]
+            TLP["TLP Power Management"]
+        end
+
+        subgraph K3s["☸ K3s Cluster"]
+            Ingress{"Traefik Ingress\n(:80)"}
+            
+            Portfolio["Go + Templ + HTMX\nPortfolio (:8002)"]
+            FileBrowser["FileBrowser Quantum\n(:8080)"]
+            Static[["Static Assets\n(Tailwind + Godot)"]]
+            RabbitMQ[("RabbitMQ\n(AMQP :5672)")]
         end
     end
-    Dev([💻 Dev Machine]) -->|SSH + kubectl| SSH
-    Dev -->|docker save / scp| K3s
 
-    style ThinkPad fill:#1a1a2e,stroke:#e94560,color:#eee
-    style K3s fill:#16213e,stroke:#0f3460,color:#eee
-    style System fill:#16213e,stroke:#0f3460,color:#eee
-    style Portfolio fill:#0f3460,stroke:#e94560,color:#eee
-    style RabbitMQ fill:#ff6600,stroke:#cc5200,color:#fff
-    style FileBrowser fill:#0f3460,stroke:#e94560,color:#eee
-    style Ingress fill:#0f3460,stroke:#e94560,color:#eee
+    %% External Traffic
+    User -->|HTTP| Ingress
+    
+    %% Internal Routing
+    Ingress -->|Route| Portfolio
+    Ingress -->|Route| FileBrowser
+    
+    %% App Dependencies
+    Portfolio -->|Serves| Static
+    Portfolio <-->|Pub/Sub Events| RabbitMQ
+
+    %% Dev & Admin Operations
+    Dev -->|SSH| SSH
+    Dev -->|kubectl / image load| K3s
+    SSH -.->|Protects| Fail2Ban
+
+    %% Styling Definitions
+    classDef host fill:#1a1a2e,stroke:#e94560,stroke-width:2px,color:#fff,rx:10,ry:10;
+    classDef env fill:#16213e,stroke:#0f3460,stroke-width:2px,color:#fff,rx:8,ry:8;
+    classDef app fill:#0f3460,stroke:#e94560,stroke-width:1px,color:#fff;
+    classDef gateway fill:#e94560,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef queue fill:#d35400,stroke:#e67e22,stroke-width:2px,color:#fff;
+
+    %% Apply Styles
+    class ThinkPad host;
+    class K3s,System env;
+    class Portfolio,FileBrowser,Static,SSH,Fail2Ban,TLP app;
+    class Ingress gateway;
+    class RabbitMQ queue;
 ```
 ```
 ┌─────────────────────────────────────────────────┐
