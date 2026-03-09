@@ -4,19 +4,38 @@ set -e
 
 SERVER="thinkpad"
 IMAGE="portfolio:latest"
+HASH_FILE=".last-deploy-hash"
 
 echo "==> Building Docker image..."
 docker build -t $IMAGE .
 
-echo "==> Saving and transferring image..."
-docker save $IMAGE | gzip | ssh $SERVER "gunzip | sudo k3s ctr images import -"
+# Get the new image ID
+NEW_HASH=$(docker inspect --format='{{.Id}}' $IMAGE)
 
-echo "==> Applying Kubernetes manifests..."
-scp -r kubernetes/ $SERVER:~/server/kubernetes/
-ssh $SERVER "kubectl apply -f ~/server/kubernetes/"
+# Check if the image actually changed
+OLD_HASH=""
+if [ -f "$HASH_FILE" ]; then
+    OLD_HASH=$(cat "$HASH_FILE")
+fi
 
-echo "==> Restarting deployment..."
-ssh $SERVER "kubectl rollout restart deployment/portfolio"
+if [ "$NEW_HASH" != "$OLD_HASH" ]; then
+    echo "==> Image changed, transferring..."
+    docker save $IMAGE | gzip > /tmp/portfolio-image.tar.gz
+    scp /tmp/portfolio-image.tar.gz $SERVER:~/portfolio-image.tar.gz
+    ssh -t $SERVER "gunzip -c ~/portfolio-image.tar.gz | sudo k3s ctr images import - && rm ~/portfolio-image.tar.gz"
+    echo "$NEW_HASH" > "$HASH_FILE"
+    echo "==> Restarting deployment..."
+    ssh $SERVER "kubectl rollout restart deployment/portfolio-web"
+else
+    echo "==> Image unchanged, skipping transfer."
+fi
 
-echo "==> Done! Checking pods..."
+# Only sync manifests that changed
+echo "==> Syncing Kubernetes manifests..."
+rsync -avz --checksum kubernetes/ $SERVER:~/kubernetes/
+
+echo "==> Applying manifests..."
+ssh $SERVER "kubectl apply -f ~/kubernetes/"
+
+echo "==> Status:"
 ssh $SERVER "kubectl get pods"

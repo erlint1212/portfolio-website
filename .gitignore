@@ -15,6 +15,7 @@ vendor/
 .direnv/
 result
 result-*
+.last-deploy-hash
 
 # OS & Editor Clutter 
 .DS_Store
