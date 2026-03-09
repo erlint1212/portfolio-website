@@ -29,7 +29,20 @@ func ProjectList() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl fade-in\"><div class=\"flex items-baseline justify-between mb-8 border-b border-gray-200 pb-4\"><h2 class=\"text-xl font-medium\">Selected Engineering Work</h2><span class=\"font-mono text-xs text-gray-400\">03 Items</span></div><div class=\"grid grid-cols-1 gap-6\"><div class=\"spec-card group relative\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">High-Performance Portfolio</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/infrastructure/web</div></div><a href=\"https://github.com/erlint1212/portfolio-website\" target=\"_blank\" class=\"text-xs font-mono underline hover:text-gray-600\">source_code</a></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A distributed system serving this website. Built to demonstrate <strong>infrastructure-as-code</strong> and network optimization. Features a sub-14kB initial TCP payload for maximum speed.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">Go</span> <span class=\"tech-badge\">Templ</span> <span class=\"tech-badge\">Tailwind</span> <span class=\"tech-badge\">HTMX</span> <span class=\"tech-badge\">RabbitMQ</span></div></div><div class=\"spec-card group\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">Event Bus Architecture</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/backend/messaging</div></div><div class=\"w-2 h-2 bg-emerald-500 rounded-full animate-pulse\" title=\"Live System\"></div></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">Implementation of the AMQP protocol using RabbitMQ. Handles decoupling of services via Topic Exchanges.  Includes a durable queue setup for message persistence.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">RabbitMQ</span> <span class=\"tech-badge\">Event Sourcing</span> <span class=\"tech-badge\">Concurrency</span></div></div><div class=\"spec-card group\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">WASM Physics Engine</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/experimental/graphics</div></div><button hx-get=\"/games/rpg\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" class=\"text-xs border border-black px-3 py-1 hover:bg-black hover:text-white transition-colors uppercase font-medium tracking-wide\">Launch Interactive</button></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A physics sandbox compiled to WebAssembly. Demonstrates the capability of running non-JS code (Godot/C++) in the browser context with near-native performance.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">WebAssembly</span> <span class=\"tech-badge\">Godot 4</span> <span class=\"tech-badge\">Physics</span></div></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl fade-in\"><div class=\"flex items-baseline justify-between mb-8 border-b border-gray-200 pb-4\"><h2 class=\"text-xl font-medium\">Selected Engineering Work</h2><span class=\"font-mono text-xs text-gray-400\">03 Items</span></div><div class=\"grid grid-cols-1 gap-6\"><div class=\"spec-card group relative\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">High-Performance Portfolio</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/infrastructure/web</div></div><a href=\"https://github.com/erlint1212/portfolio-website\" target=\"_blank\" class=\"text-xs font-mono underline hover:text-gray-600\">source_code</a></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A distributed system serving this website. Built to demonstrate <strong>infrastructure-as-code</strong> and network optimization. Features a sub-14kB initial TCP payload for maximum speed.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">Go</span> <span class=\"tech-badge\">Templ</span> <span class=\"tech-badge\">Tailwind</span> <span class=\"tech-badge\">HTMX</span> <span class=\"tech-badge\">RabbitMQ</span></div></div><div class=\"spec-card group\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">Event Bus Architecture</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/backend/messaging</div></div><div class=\"w-2 h-2 bg-emerald-500 rounded-full animate-pulse\" title=\"Live System\"></div></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">Implementation of the AMQP protocol using RabbitMQ. Handles decoupling of services via Topic Exchanges.  Includes a durable queue setup for message persistence.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">RabbitMQ</span> <span class=\"tech-badge\">Event Sourcing</span> <span class=\"tech-badge\">Concurrency</span></div></div><div class=\"spec-card group\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">2D Color-Switch Shooter</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/games/color-shooter</div></div><button hx-get=\"/games/color-shooter\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" class=\"text-xs border border-black px-3 py-1 hover:bg-black hover:text-white transition-colors uppercase font-medium tracking-wide\">Launch Interactive</button></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A fast-paced 2D platformer and shooter. Players must rapidly switch between color masks (Red, Green, Blue) to strategically match enemy colors, reflect laser attacks, and survive against various enemy archetypes like shotguns and snipers.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">Godot 4</span> <span class=\"tech-badge\">GDScript</span> <span class=\"tech-badge\">2D Action</span></div></div><div class=\"spec-card group relative\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">Fault-Tolerant AI Translation Pipeline</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/projects/ai-translation</div></div><a href=\"https://github.com/erlint1212/ai-transealtion-novel-to-anki-tts\" target=\"_blank\" class=\"text-xs font-mono underline hover:text-gray-600\">source_code</a></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A highly resilient ETL pipeline that transforms unstructured text into structured learning datasets. It features a custom <strong>VRAM Safety Bridge</strong> to seamlessly hot-swap 14B LLM and 1.7B TTS models on standard 12GB hardware, granular JSON micro-caching for immediate crash recovery, and a contextual <strong>RAG-lite injection system</strong>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs("for translation accuracy.")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 86, Col: 402}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">Python</span> <span class=\"tech-badge\">PyTorch</span> <span class=\"tech-badge\">Ollama</span></div></div><div class=\"spec-card group relative\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">Audiobook ETL Pipeline</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/projects/audiobook-creator</div></div><a href=\"https://github.com/erlint1212/audiobook_creator\" target=\"_blank\" class=\"text-xs font-mono underline hover:text-gray-600\">source_code</a></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">An <strong>end-to-end data pipeline</strong> that scrapes unstructured web text and fully automates the creation of audiobooks. The transformation process includes text cleaning, machine translation via the Gemini API, local TTS generation, audio conversion to OPUS, and automated metadata tagging for seamless library integration.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">Python</span> <span class=\"tech-badge\">Web Scraping</span> <span class=\"tech-badge\">APIs</span></div></div><div class=\"spec-card group relative\"><div class=\"flex justify-between items-start mb-4\"><div><h3 class=\"font-bold text-lg\">Bare-Metal K3s Portfolio</h3><div class=\"font-mono text-xs text-gray-500 mt-1\">/projects/bare-metal-portfolio</div></div><a href=\"https://github.com/erlint1212/portfolio-website\" target=\"_blank\" class=\"text-xs font-mono underline hover:text-gray-600\">source_code</a></div><p class=\"text-sm text-gray-600 mb-6 max-w-xl leading-relaxed\">A self-hosted fullstack web application running on a dedicated physical server configured declaratively with <strong>NixOS</strong>. The infrastructure is orchestrated using K3s (Kubernetes), utilizing an event-driven <strong>RabbitMQ</strong> architecture for real-time interaction logging, and is fully monitored by a Prometheus and Grafana stack.</p><div class=\"mt-auto flex gap-2\"><span class=\"tech-badge\">Go</span> <span class=\"tech-badge\">Kubernetes</span> <span class=\"tech-badge\">NixOS</span></div></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,9 +66,9 @@ func ProjectListHTMX() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var2 == nil {
-			templ_7745c5c3_Var2 = templ.NopComponent
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = ProjectList().Render(ctx, templ_7745c5c3_Buffer)
@@ -86,9 +99,9 @@ func ProjectsPage() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var3 == nil {
-			templ_7745c5c3_Var3 = templ.NopComponent
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = Base("Engineering", ProjectList(), "/projects").Render(ctx, templ_7745c5c3_Buffer)
@@ -115,25 +128,25 @@ func GameView(gamePath string) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var4 == nil {
-			templ_7745c5c3_Var4 = templ.NopComponent
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"h-full flex flex-col animate-fade-in max-w-5xl mx-auto\"><div class=\"flex justify-between items-center mb-6 border-b border-gray-200 pb-4\"><div><h2 class=\"text-lg font-bold\">Interactive Session</h2><div class=\"font-mono text-xs text-gray-500\">Instance: WASM_Container_01</div></div><button hx-get=\"/projects\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" class=\"text-xs text-red-600 hover:text-red-800 font-medium underline\">Close Session</button></div><div class=\"aspect-video w-full bg-black shadow-xl border border-gray-900\"><iframe src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"h-full flex flex-col animate-fade-in max-w-5xl mx-auto\"><div class=\"flex justify-between items-center mb-6 border-b border-gray-200 pb-4\"><div><h2 class=\"text-lg font-bold\">Interactive Session</h2><div class=\"font-mono text-xs text-gray-500\">Instance: WASM_Container_01</div></div><button hx-get=\"/projects\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" class=\"text-xs text-red-600 hover:text-red-800 font-medium underline\">Close Session</button></div><div class=\"aspect-video w-full bg-black shadow-xl border border-gray-900\"><iframe src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(gamePath)
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(gamePath)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 108, Col: 30}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/projects.templ`, Line: 163, Col: 30}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"w-full h-full\" frameborder=\"0\"></iframe></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" class=\"w-full h-full\" frameborder=\"0\"></iframe></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

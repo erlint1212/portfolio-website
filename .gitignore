@@ -29,3 +29,7 @@ project_context.txt
 context_builder.py
 
 /server-config/
+
+**.tar.gz
+*.tar.gz
+

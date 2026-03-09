@@ -40,7 +40,7 @@ func (s *Server) handlerUserStartGame(w http.ResponseWriter, r *http.Request) {
 		log.Println("[WARNING] Publisher is nil, skipping log.")
 	}
 
-	templ.Handler(views.GameView("/assets/games/rpg/index.html")).ServeHTTP(w, r)
+	templ.Handler(views.GameView("/assets/games/color-shooter/index.html")).ServeHTTP(w, r)
 }
 
 func (s *Server) handlerProjects(w http.ResponseWriter, r *http.Request) {
@@ -62,7 +62,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	file_server := http.FileServer(http.Dir("./assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", addGodotHeaders(file_server)))
 
-	mux.HandleFunc("/games/rpg", s.handlerUserStartGame)
+	mux.HandleFunc("/games/color-shooter", s.handlerUserStartGame)
 
 	return mux
 }

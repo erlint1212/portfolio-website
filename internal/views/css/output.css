@@ -204,6 +204,9 @@
   .relative {
     position: relative;
   }
+  .static {
+    position: static;
+  }
   .z-20 {
     z-index: 20;
   }
@@ -282,8 +285,8 @@
   .h-full {
     height: 100%;
   }
-  .min-h-screen {
-    min-height: 100vh;
+  .h-screen {
+    height: 100vh;
   }
   .w-2 {
     width: calc(var(--spacing) * 2);
