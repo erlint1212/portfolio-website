@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # deploy.sh — Build locally, push to GHCR, let ArgoCD handle the rest
 set -e
 
