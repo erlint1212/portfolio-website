@@ -1,5 +1,5 @@
 {
-  description = "Backend Archmage Portfolio Environment";
+  description = "Backend Portfolio Website Environment";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
@@ -14,20 +14,36 @@
       {
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
+            #  Core Stack 
             go
             templ
-            docker
-            kubectl
-            sshfs              # Mount ThinkPad files locally if needed
-            k9s
-            minikube
-            rabbitmq-server
-            # tailwindcss
             tailwindcss_4
 
+            #  Kubernetes 
+            docker
+            kubectl
+            k9s
+            minikube
+            kubernetes-helm     # Deploying ArgoCD + Vaultwarden charts
+
+            #  CI/CD 
+            argocd              # ArgoCD CLI (sync, app management)
+
+            #  Secrets & TLS 
+            openssl             # Generate self-signed certs
+            mkcert              # Local-trusted dev certs (no browser warnings)
+            nss.tools           # certutil — needed by mkcert for browser CA install
+
+            #  Messaging 
+            rabbitmq-server
+
+            #  Remote / Mount 
+            sshfs
+
+            #  Build Context 
             python313Packages.pathspec
             
-            # Useful tools for debugging
+            #  Debugging 
             curl 
             jq
           ];
@@ -35,20 +51,32 @@
           shellHook = ''
             echo "Enter the Minikube Docker Environment"
             eval $(minikube docker-env)
-            echo "Environment: GOTH: Go + Tailwind + Htmx + Templ + K8s"
-            echo "------------------------------------------------"
+            echo "  GOTH Stack + server: Go + Tailwind + Htmx + Templ"
+            echo "  + K8s + ArgoCD + Vaultwarden"
             go version
             templ --version
+            echo ""
+
+            #  Aliases 
             alias k='kubectl'
+            alias kgp='kubectl get pods'
+            alias kga='kubectl get all'
             alias tgr='templ generate && tailwindcss -i ./internal/assets/css/input.css -o ./internal/views/css/output.css && go run cmd/web/main.go'
             alias tailcomp='tailwindcss -i ./internal/assets/css/input.css -o ./internal/views/css/output.css'
-            alias kgp='kubectl get pods'
+
             echo "Commands:"
-            echo "Tailwind CSS (alias tailcomp): tailwindcss -i ./internal/assets/css/input.css -o ./assets/css/output.css"
-            echo "RabbitMQ: kubectl port-forward service/portfolio-rabbitmq-service 5672:5672"
-            echo "Website: kubectl port-forward service/portfolio-service 8000:80"
+            echo "  tgr        — templ generate + tailwind + go run"
+            echo "  tailcomp   — recompile Tailwind CSS"
+            echo "  kgp        — kubectl get pods"
+            echo ""
+            echo "Port forwards:"
+            echo "  RabbitMQ:  kubectl port-forward svc/portfolio-rabbitmq-service 5672:5672"
+            echo "  Website:   kubectl port-forward svc/portfolio-service 8000:80"
+            echo "  ArgoCD:    kubectl port-forward svc/argocd-server -n argocd 8083:443"
+            echo "  Vaultwarden: kubectl port-forward svc/vaultwarden -n vaultwarden 8443:80"
           '';
         };
       }
     );
 }
+

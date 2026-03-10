@@ -14,12 +14,13 @@ spec:
       labels:
         app: portfolio-web
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
-        - image: portfolio:latest
+        - image: ghcr.io/erlint1212/portfolio-website:latest
           name: portfolio-web
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           resources: {}
           envFrom:
             - configMapRef:
                 name: portfolio-web-configmap
-
