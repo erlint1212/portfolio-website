@@ -1,41 +1,23 @@
-#!/usr/bin/env bash
-# Simple deployment before proper CI/CD with github actions or something simmilar
+#!/bin/bash
+# deploy.sh — Build locally, push to GHCR, let ArgoCD handle the rest
 set -e
 
-SERVER="thinkpad"
-IMAGE="portfolio:latest"
-HASH_FILE=".last-deploy-hash"
+IMAGE="ghcr.io/erlint1212/portfolio-website"
+TAG=$(git rev-parse --short HEAD)
 
-echo "==> Building Docker image..."
-docker build -t $IMAGE .
+echo "Building image: $IMAGE:$TAG"
+docker build -t "$IMAGE:$TAG" -t "$IMAGE:latest" .
 
-# Get the new image ID
-NEW_HASH=$(docker inspect --format='{{.Id}}' $IMAGE)
+echo "Pushing to GHCR"
+docker push "$IMAGE:$TAG"
+docker push "$IMAGE:latest"
 
-# Check if the image actually changed
-OLD_HASH=""
-if [ -f "$HASH_FILE" ]; then
-    OLD_HASH=$(cat "$HASH_FILE")
-fi
+echo "Updating deployment manifest"
+sed -i "s|image: ghcr.io/erlint1212/portfolio-website:.*|image: ghcr.io/erlint1212/portfolio-website:$TAG|" kubernetes/portfolio-deployment.yaml
 
-if [ "$NEW_HASH" != "$OLD_HASH" ]; then
-    echo "==> Image changed, transferring..."
-    docker save $IMAGE | gzip > /tmp/portfolio-image.tar.gz
-    scp /tmp/portfolio-image.tar.gz $SERVER:~/portfolio-image.tar.gz
-    ssh -t $SERVER "gunzip -c ~/portfolio-image.tar.gz | sudo k3s ctr images import - && rm ~/portfolio-image.tar.gz"
-    echo "$NEW_HASH" > "$HASH_FILE"
-    echo "==> Restarting deployment..."
-    ssh $SERVER "kubectl rollout restart deployment/portfolio-web"
-else
-    echo "==> Image unchanged, skipping transfer."
-fi
+echo "Committing and pushing"
+git add kubernetes/portfolio-deployment.yaml
+git diff --staged --quiet || git commit -m "deploy: update image to $TAG"
+git push
 
-# Only sync manifests that changed
-echo "==> Syncing Kubernetes manifests..."
-rsync -avz --checksum kubernetes/ $SERVER:~/kubernetes/
-
-echo "==> Applying manifests..."
-ssh $SERVER "kubectl apply -f ~/kubernetes/"
-
-echo "==> Status:"
-ssh $SERVER "kubectl get pods"
+echo "Done! ArgoCD will pick it up."

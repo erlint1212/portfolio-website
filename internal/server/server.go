@@ -64,7 +64,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	mux.HandleFunc("/games/color-shooter", s.handlerUserStartGame)
 
-	return mux
+	return gzipMiddleware(mux)
 }
 
 func NewServer(addr string, client *messaging.Client, pub *messaging.Publisher) *Server {
