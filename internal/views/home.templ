@@ -1,5 +1,33 @@
 package views
 
+templ techExpandable(name, category, description, link string) {
+    <details class="group border-b border-gray-100 pb-0 cursor-pointer">
+        <summary class="flex items-center justify-between list-none [&::-webkit-details-marker]:hidden hover:bg-gray-50 p-1.5 -mx-1.5 rounded transition-colors">
+            <span class="font-medium text-gray-800 group-open:font-bold group-open:text-black transition-all">{ name }</span>
+            
+            <div class="flex items-center gap-3">
+                <span class="font-mono text-xs text-gray-400 group-open:text-gray-500">{ category }</span>
+                
+                <svg 
+                    class="w-4 h-4 text-gray-400 transition-transform duration-200 group-open:rotate-180" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+        </summary>
+        
+        <div class="mt-2 text-sm text-gray-600 leading-relaxed border-l-2 border-gray-200 pl-3 ml-1.5 mb-2">
+            <p>{ description }</p>
+            <a href={ templ.URL(link) } target="_blank" class="inline-block mt-2 font-mono text-[10px] uppercase tracking-wider text-gray-400 hover:text-black transition-colors underline">
+                Official Documentation ↗
+            </a>
+        </div>
+    </details>
+}
+
 templ Home(title string) {
     @Base(title, homeContent(), "/")
 }
@@ -24,40 +52,34 @@ templ homeContent() {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
                 <h3 class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">Core Technology</h3>
-                <ul class="space-y-3 text-sm">
-                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
-                        <span class="font-medium">Python</span>
-                        <span class="font-mono text-xs text-gray-400">Backend</span>
-                    </li>
-                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
-                        <span class="font-medium">Go (Golang)</span>
-                        <span class="font-mono text-xs text-gray-400">Backend</span>
-                    </li>
-                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
-                        <span class="font-medium">Nix / NixOS</span>
-                        <span class="font-mono text-xs text-gray-400">Infra</span>
-                    </li>
-                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
-                        <span class="font-medium">Docker</span>
-                        <span class="font-mono text-xs text-gray-400">Orchestration</span>
-                    </li>
-                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
-                        <span class="font-medium">Kubernetes</span>
-                        <span class="font-mono text-xs text-gray-400">Orchestration</span>
-                    </li>
-                    <li class="flex items-baseline justify-between border-b border-gray-100 pb-2">
-                        <span class="font-medium">RabbitMQ</span>
-                        <span class="font-mono text-xs text-gray-400">Messaging</span>
-                    </li>
-                </ul>
+                <div class="space-y-3 text-sm">
+                    @techExpandable("Python", "Backend", "High-level programming language used heavily in data engineering, ML pipelines, and API backends.", "https://www.python.org/")
+                    
+                    @techExpandable("Go (Golang)", "Backend", "Statically typed, compiled language known for its simplicity and high performance in concurrent systems.", "https://go.dev/")
+                    
+                    @techExpandable("PostgreSQL / SQL", "Data", "Powerful, open-source object-relational database system with a strong reputation for reliability and data integrity.", "https://www.postgresql.org/")
+                    
+                    @techExpandable("Nix / NixOS", "Infra", "Declarative package manager and Linux distribution that ensures highly reproducible builds and environments.", "https://nixos.org/")
+                    
+                    @techExpandable("Docker", "Containerization", "Standardized platform for developing, shipping, and running applications in isolated, lightweight containers.", "https://www.docker.com/")
+                    
+                    @techExpandable("Kubernetes", "Orchestration", "Container orchestration system for automating software deployment, scaling, and management across clusters.", "https://kubernetes.io/") 
+
+                    @techExpandable("RabbitMQ", "Messaging", "Open-source message-broker software that implements AMQP for robust event-driven architectures.", "https://www.rabbitmq.com/")
+                    
+                    @techExpandable("PyTorch", "AI/ML", "Open-source machine learning framework utilized for building, training, and deploying deep learning models.", "https://pytorch.org/")
+
+                    @techExpandable("Ollama", "Local Inference", "Lightweight framework for building and running large language models locally, enabling private and cost-effective AI pipelines.", "https://ollama.com/")
+                </div>
             </div>
 
             <div>
                 <h3 class="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">Focus Areas</h3>
                  <ul class="space-y-3 text-sm text-gray-600">
                     <li>→ <strong>Event-Driven Architecture:</strong> Designing systems that scale horizontally.</li>
-                    <li>→ <strong>Reproducibility:</strong> Eliminating "it works on my machine" with Nix.</li>
                     <li>→ <strong>Data Engineering:</strong> ETL pipelines for heavy ML workloads.</li>
+                    <li>→ <strong>AI Pipelines:</strong> Managing local inference and fault-tolerant AI tooling.</li>
+                    <li>→ <strong>Reproducibility:</strong> Eliminating "it works on my machine" with Nix.</li>
                 </ul>
                 <div class="mt-8">
                     <button 

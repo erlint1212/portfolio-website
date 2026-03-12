@@ -25,12 +25,12 @@ graph LR
         end
 
         subgraph K3s["☸ K3s Cluster"]
-            Ingress{"Traefik Ingress\n(:80)"}
+            Ingress{"Traefik Ingress<br>(:80)"}
             
-            Portfolio["Go + Templ + HTMX\nPortfolio (:8002)"]
-            FileBrowser["FileBrowser Quantum\n(:8080)"]
-            Static[["Static Assets\n(Tailwind + Godot)"]]
-            RabbitMQ[("RabbitMQ\n(AMQP :5672)")]
+            Portfolio["Go + Templ + HTMX<br>Portfolio (:8002)"]
+            FileBrowser["FileBrowser Quantum<br>(:8080)"]
+            Static[["Static Assets<br>(Tailwind + Godot)"]]
+            RabbitMQ[("RabbitMQ<br>(AMQP :5672)")]
         end
     end
 
