@@ -8,7 +8,8 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Home(title string) templ.Component {
+// Helper component for expandable technology items
+func techExpandable(name, category, description, link string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -27,6 +28,87 @@ func Home(title string) templ.Component {
 		templ_7745c5c3_Var1 := templ.GetChildren(ctx)
 		if templ_7745c5c3_Var1 == nil {
 			templ_7745c5c3_Var1 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<details class=\"group border-b border-gray-100 pb-0 cursor-pointer\"><summary class=\"flex items-center justify-between list-none [&::-webkit-details-marker]:hidden hover:bg-gray-50 p-1.5 -mx-1.5 rounded transition-colors\"><span class=\"font-medium text-gray-800 group-open:font-bold group-open:text-black transition-all\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(name)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 8, Col: 116}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</span><div class=\"flex items-center gap-3\"><span class=\"font-mono text-xs text-gray-400 group-open:text-gray-500\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(category)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 11, Col: 97}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</span><svg class=\"w-4 h-4 text-gray-400 transition-transform duration-200 group-open:rotate-180\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></div></summary><div class=\"mt-2 text-sm text-gray-600 leading-relaxed border-l-2 border-gray-200 pl-3 ml-1.5 mb-2\"><p>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(description)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 27, Col: 28}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</p><a href=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 templ.SafeURL
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinURLErrs(templ.URL(link))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 28, Col: 37}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" target=\"_blank\" class=\"inline-block mt-2 font-mono text-[10px] uppercase tracking-wider text-gray-400 hover:text-black transition-colors underline\">Official Documentation ↗</a></div></details>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func Home(title string) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var6 == nil {
+			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = Base(title, homeContent(), "/").Render(ctx, templ_7745c5c3_Buffer)
@@ -53,16 +135,56 @@ func homeContent() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var2 == nil {
-			templ_7745c5c3_Var2 = templ.NopComponent
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = HtmxIndicator().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-2xl fade-in\"><header class=\"mb-12\"><h1 class=\"text-3xl md:text-4xl font-semibold mb-6 leading-tight\">Backend Engineer specializing in <br><span class=\"text-gray-500\">Distributed Systems & Data Pipelines.</span></h1><p class=\"text-lg text-gray-600 leading-relaxed\">I build fault-tolerant infrastructure and high-performance data tools.  Currently bridging the gap between <strong class=\"text-black font-medium\">Statistical Modeling</strong> (MSc) and <strong class=\"text-black font-medium\">Systems Engineering</strong> (Go/K8s).</p></header><hr class=\"border-gray-200 mb-12\"><div class=\"grid grid-cols-1 md:grid-cols-2 gap-12\"><div><h3 class=\"font-mono text-xs uppercase tracking-widest text-gray-500 mb-4\">Core Technology</h3><ul class=\"space-y-3 text-sm\"><li class=\"flex items-baseline justify-between border-b border-gray-100 pb-2\"><span class=\"font-medium\">Python</span> <span class=\"font-mono text-xs text-gray-400\">Backend</span></li><li class=\"flex items-baseline justify-between border-b border-gray-100 pb-2\"><span class=\"font-medium\">Go (Golang)</span> <span class=\"font-mono text-xs text-gray-400\">Backend</span></li><li class=\"flex items-baseline justify-between border-b border-gray-100 pb-2\"><span class=\"font-medium\">Nix / NixOS</span> <span class=\"font-mono text-xs text-gray-400\">Infra</span></li><li class=\"flex items-baseline justify-between border-b border-gray-100 pb-2\"><span class=\"font-medium\">Docker</span> <span class=\"font-mono text-xs text-gray-400\">Orchestration</span></li><li class=\"flex items-baseline justify-between border-b border-gray-100 pb-2\"><span class=\"font-medium\">Kubernetes</span> <span class=\"font-mono text-xs text-gray-400\">Orchestration</span></li><li class=\"flex items-baseline justify-between border-b border-gray-100 pb-2\"><span class=\"font-medium\">RabbitMQ</span> <span class=\"font-mono text-xs text-gray-400\">Messaging</span></li></ul></div><div><h3 class=\"font-mono text-xs uppercase tracking-widest text-gray-500 mb-4\">Focus Areas</h3><ul class=\"space-y-3 text-sm text-gray-600\"><li>→ <strong>Event-Driven Architecture:</strong> Designing systems that scale horizontally.</li><li>→ <strong>Reproducibility:</strong> Eliminating \"it works on my machine\" with Nix.</li><li>→ <strong>Data Engineering:</strong> ETL pipelines for heavy ML workloads.</li></ul><div class=\"mt-8\"><button hx-get=\"/projects\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" hx-push-url=\"true\" class=\"text-sm font-medium border-b border-black hover:border-gray-400 transition-colors pb-0.5\">View Engineering Projects →</button></div></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"max-w-2xl fade-in\"><header class=\"mb-12\"><h1 class=\"text-3xl md:text-4xl font-semibold mb-6 leading-tight\">Backend Engineer specializing in <br><span class=\"text-gray-500\">Distributed Systems & Data Pipelines.</span></h1><p class=\"text-lg text-gray-600 leading-relaxed\">I build fault-tolerant infrastructure and high-performance data tools.  Currently bridging the gap between <strong class=\"text-black font-medium\">Statistical Modeling</strong> (MSc) and <strong class=\"text-black font-medium\">Systems Engineering</strong> (Go/K8s).</p></header><hr class=\"border-gray-200 mb-12\"><div class=\"grid grid-cols-1 md:grid-cols-2 gap-12\"><div><h3 class=\"font-mono text-xs uppercase tracking-widest text-gray-500 mb-4\">Core Technology</h3><div class=\"space-y-3 text-sm\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("Python", "Backend", "High-level programming language used heavily in data engineering, ML pipelines, and API backends.", "https://www.python.org/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("Go (Golang)", "Backend", "Statically typed, compiled language known for its simplicity and high performance in concurrent systems.", "https://go.dev/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("PostgreSQL / SQL", "Data", "Powerful, open-source object-relational database system with a strong reputation for reliability and data integrity.", "https://www.postgresql.org/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("Nix / NixOS", "Infra", "Declarative package manager and Linux distribution that ensures highly reproducible builds and environments.", "https://nixos.org/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("Docker", "Containerization", "Standardized platform for developing, shipping, and running applications in isolated, lightweight containers.", "https://www.docker.com/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("Kubernetes", "Orchestration", "Container orchestration system for automating software deployment, scaling, and management across clusters.", "https://kubernetes.io/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("RabbitMQ", "Messaging", "Open-source message-broker software that implements AMQP for robust event-driven architectures.", "https://www.rabbitmq.com/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("PyTorch", "AI/ML", "Open-source machine learning framework utilized for building, training, and deploying deep learning models.", "https://pytorch.org/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = techExpandable("Ollama", "Local Inference", "Lightweight framework for building and running large language models locally, enabling private and cost-effective AI pipelines.", "https://ollama.com/").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div></div><div><h3 class=\"font-mono text-xs uppercase tracking-widest text-gray-500 mb-4\">Focus Areas</h3><ul class=\"space-y-3 text-sm text-gray-600\"><li>→ <strong>Event-Driven Architecture:</strong> Designing systems that scale horizontally.</li><li>→ <strong>Data Engineering:</strong> ETL pipelines for heavy ML workloads.</li><li>→ <strong>AI Pipelines:</strong> Managing local inference and fault-tolerant AI tooling.</li><li>→ <strong>Reproducibility:</strong> Eliminating \"it works on my machine\" with Nix.</li></ul><div class=\"mt-8\"><button hx-get=\"/projects\" hx-target=\"#main-viewport\" hx-swap=\"innerHTML\" hx-push-url=\"true\" class=\"text-sm font-medium border-b border-black hover:border-gray-400 transition-colors pb-0.5\">View Engineering Projects →</button></div></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

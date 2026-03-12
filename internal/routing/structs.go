@@ -8,3 +8,12 @@ type GameLog struct {
 	// Username    string
 }
 
+type Project struct {
+	Title       string
+	Category    string
+	SourceURL   string
+	IsLive      bool
+	GamePath    string
+	Description string
+	Tags        []string
+}

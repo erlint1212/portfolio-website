@@ -54,18 +54,8 @@ func main() {
 	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 
 	go func() {
-		// 2. Attempt to start the server. This function blocks until the 
-    	//    server is turned off.
-    	//    Capture any error it returns into the variable 'err'.
 		log.Printf("Serving on: http://localhost%s/", srv.Addr)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			// 3.  check for a specific error: http.ErrServerClosed.
-			//    When  eventually call `srv.Shutdown()` (in the main thread), 
-			//    `ListenAndServe` will return this specific error.
-			//    
-			//     WANT that error; it means  shut down successfully.
-			//     only want to log a Fatal crash if the error is NOT "ServerClosed"
-			//    (e.g., if the port 8000 is already in use by another program).
 			log.Fatalf("Listen: %s\n", err)
 		}
 	}()
