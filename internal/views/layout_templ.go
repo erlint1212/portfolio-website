@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 func navLinkClass(isActive bool) string {
-	base := "block px-3 py-1.5 text-sm transition-colors duration-150 rounded-sm"
+	base := "block px-3 py-1.5 text-sm transition-colors duration-150 rounded-sm whitespace-nowrap"
 	if isActive {
 		return base + " bg-black text-white font-medium"
 	}
@@ -37,7 +37,7 @@ func SidebarNav(currentPath string, oob bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<nav id=\"sidebar-nav\" class=\"space-y-0.5 flex-grow font-medium\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<nav id=\"sidebar-nav\" class=\"flex flex-col space-y-0.5 font-medium mt-4 md:mt-0\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -163,7 +163,7 @@ func Base(title string, content templ.Component, currentPath string) templ.Compo
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</head><body class=\"overflow-hidden bg-white\"><div class=\"swiss-layout w-full max-w-[1600px] mx-auto border-x border-gray-200 shadow-sm\"><aside class=\"bg-[#fbfcff] border-r border-gray-200 flex flex-col p-6 z-20\"><div class=\"mb-10\"><div class=\"w-8 h-8 bg-black mb-4\"></div><h1 class=\"text-sm font-bold tracking-tight\">Erling T. Nordtvedt</h1><p class=\"text-xs text-gray-500 font-mono mt-1\">MSc Data Science</p></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</head><body class=\"overflow-hidden bg-white relative\"><button id=\"sidebar-toggle\" class=\"fixed top-4 left-4 z-50 bg-white border border-gray-200 shadow-sm p-1.5 rounded-md hover:bg-gray-50 transition-colors focus:outline-none\" title=\"Toggle Directory\"><svg id=\"sidebar-arrow\" class=\"w-5 h-5 text-gray-600 transition-transform duration-300 rotate-180 md:rotate-0\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 19l-7-7 7-7\"></path></svg></button><div class=\"swiss-layout flex flex-row w-full max-w-[1600px] mx-auto border-x border-gray-200 shadow-sm h-screen overflow-hidden\"><aside id=\"main-sidebar\" class=\"w-0 md:w-64 border-r border-transparent md:border-gray-200 bg-[#fbfcff] flex flex-col flex-shrink-0 transition-all duration-300 ease-in-out overflow-hidden\"><div class=\"w-64 p-6 pt-16 flex flex-col h-full\"><div class=\"mb-10 block\"><div class=\"w-8 h-8 bg-black mb-4 flex-shrink-0\"></div><div><h1 class=\"text-sm font-bold tracking-tight\">Erling T. Nordtvedt</h1><p class=\"text-xs text-gray-500 font-mono mt-1\">MSc Data Science</p></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -171,7 +171,7 @@ func Base(title string, content templ.Component, currentPath string) templ.Compo
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</aside><main class=\"relative bg-white overflow-y-auto scroll-smooth p-10 md:p-16 flex flex-col h-screen\" id=\"main-viewport\"><div class=\"flex-grow\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</div></aside><main class=\"relative bg-white overflow-y-auto scroll-smooth flex flex-col flex-1 min-w-0\" id=\"main-viewport\"><div class=\"flex-grow p-6 pt-16 md:p-16 md:pt-16\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -179,7 +179,7 @@ func Base(title string, content templ.Component, currentPath string) templ.Compo
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div><footer class=\"mt-24 pt-8 border-t border-gray-100 text-xs text-gray-400 font-mono\"><div class=\"flex flex-col md:flex-row justify-between gap-4\"><div class=\"flex gap-6\"><span>&copy; 2026 Erling T. Nordtvedt</span> <span class=\"text-gray-300\">|</span> <span>Oslo, Norway</span></div><div class=\"flex items-center gap-2\"><span class=\"w-2 h-2 rounded-full bg-emerald-500\"></span> <span>Powered by the <strong class=\"text-gray-600 font-medium\">GOTH Stack</strong></span></div></div></footer></main></div></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div><footer class=\"mt-24 p-6 md:p-16 pt-8 border-t border-gray-100 text-xs text-gray-400 font-mono\"><div class=\"flex flex-col md:flex-row justify-between gap-4\"><div class=\"flex flex-wrap gap-4 md:gap-6\"><span>&copy; 2026 Erling T. Nordtvedt</span> <span class=\"text-gray-300 hidden md:inline\">|</span> <span>Oslo, Norway</span></div><div class=\"flex items-center gap-2\"><span class=\"w-2 h-2 rounded-full bg-emerald-500\"></span> <span>Powered by the <strong class=\"text-gray-600 font-medium\">GOTH Stack</strong></span></div></div></footer></main></div><script>\n\t\t\tdocument.addEventListener('DOMContentLoaded', () => {\n\t\t\t\tconst toggleBtn = document.getElementById('sidebar-toggle');\n\t\t\t\tconst sidebar = document.getElementById('main-sidebar');\n\t\t\t\tconst arrow = document.getElementById('sidebar-arrow');\n\t\t\t\t\n\t\t\t\t// Determine initial state based on rendered width\n\t\t\t\tlet isOpen = sidebar.clientWidth > 0;\n\n\t\t\t\tif (toggleBtn && sidebar && arrow) {\n\t\t\t\t\ttoggleBtn.addEventListener('click', () => {\n\t\t\t\t\t\t// Strip responsive classes so JavaScript takes full control\n\t\t\t\t\t\tsidebar.classList.remove('md:w-64', 'md:border-gray-200');\n\t\t\t\t\t\tarrow.classList.remove('md:rotate-0');\n\n\t\t\t\t\t\tif (isOpen) {\n\t\t\t\t\t\t\t// Slide out of the way & shrink (Main content expands)\n\t\t\t\t\t\t\tsidebar.classList.remove('w-64', 'border-gray-200');\n\t\t\t\t\t\t\tsidebar.classList.add('w-0', 'border-transparent');\n\t\t\t\t\t\t\tarrow.classList.add('rotate-180');\n\t\t\t\t\t\t\tisOpen = false;\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t// Slide into view & expand (Main content yields space)\n\t\t\t\t\t\t\tsidebar.classList.remove('w-0', 'border-transparent');\n\t\t\t\t\t\t\tsidebar.classList.add('w-64', 'border-gray-200');\n\t\t\t\t\t\t\tarrow.classList.remove('rotate-180');\n\t\t\t\t\t\t\tisOpen = true;\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t});\n\t\t</script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

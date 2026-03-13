@@ -1,7 +1,7 @@
 package views
 
 func navLinkClass(isActive bool) string {
-	base := "block px-3 py-1.5 text-sm transition-colors duration-150 rounded-sm"
+	base := "block px-3 py-1.5 text-sm transition-colors duration-150 rounded-sm whitespace-nowrap"
 	if isActive {
 		return base + " bg-black text-white font-medium"
 	}
@@ -11,7 +11,7 @@ func navLinkClass(isActive bool) string {
 templ SidebarNav(currentPath string, oob bool) {
 	<nav 
 		id="sidebar-nav" 
-		class="space-y-0.5 flex-grow font-medium"
+		class="flex flex-col space-y-0.5 font-medium mt-4 md:mt-0"
 		if oob {
 			hx-swap-oob="true"
 		}
@@ -36,33 +36,57 @@ templ Base(title string, content templ.Component, currentPath string) {
 		<title>{ title }</title>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+		<link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
 		<script src="https://unpkg.com/htmx.org@1.9.10"></script>
 		@templ.Raw("<style>" + LoadCSS() + "</style>")
 	</head>
-	<body class="overflow-hidden bg-white"> 
+	<body class="overflow-hidden bg-white relative"> 
 		
-		<div class="swiss-layout w-full max-w-[1600px] mx-auto border-x border-gray-200 shadow-sm">
-			<aside class="bg-[#fbfcff] border-r border-gray-200 flex flex-col p-6 z-20">
-				<div class="mb-10">
-					<div class="w-8 h-8 bg-black mb-4"></div>
-					<h1 class="text-sm font-bold tracking-tight">Erling T. Nordtvedt</h1>
-					<p class="text-xs text-gray-500 font-mono mt-1">MSc Data Science</p>
-				</div>
+		// 1. Floating Toggle Button with SVG Arrow
+		<button 
+			id="sidebar-toggle" 
+			class="fixed top-4 left-4 z-50 bg-white border border-gray-200 shadow-sm p-1.5 rounded-md hover:bg-gray-50 transition-colors focus:outline-none"
+			title="Toggle Directory"
+		>
+			// Arrow points right (180deg) by default on mobile, left (0deg) on desktop
+			<svg id="sidebar-arrow" class="w-5 h-5 text-gray-600 transition-transform duration-300 rotate-180 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+			</svg>
+		</button>
 
-				@SidebarNav(currentPath, false)
+		// 2. Main layout is ALWAYS flex-row now
+		<div class="swiss-layout flex flex-row w-full max-w-[1600px] mx-auto border-x border-gray-200 shadow-sm h-screen overflow-hidden">
+			
+			// 3. Sidebar Container: Starts w-0 on mobile, w-64 on desktop
+			<aside 
+				id="main-sidebar" 
+				class="w-0 md:w-64 border-r border-transparent md:border-gray-200 bg-[#fbfcff] flex flex-col flex-shrink-0 transition-all duration-300 ease-in-out overflow-hidden"
+			>
+				// Inner wrapper locked at w-64 prevents text squishing during animation
+				<div class="w-64 p-6 pt-16 flex flex-col h-full">
+					<div class="mb-10 block">
+						<div class="w-8 h-8 bg-black mb-4 flex-shrink-0"></div>
+						<div>
+							<h1 class="text-sm font-bold tracking-tight">Erling T. Nordtvedt</h1>
+							<p class="text-xs text-gray-500 font-mono mt-1">MSc Data Science</p>
+						</div>
+					</div>
+
+					@SidebarNav(currentPath, false)
+				</div>
 			</aside>
 
-            <main class="relative bg-white overflow-y-auto scroll-smooth p-10 md:p-16 flex flex-col h-screen" id="main-viewport">
-				<div class="flex-grow">
+            // 4. Main Viewport: flex-1 allows it to dynamically stretch when the sidebar shrinks
+            <main class="relative bg-white overflow-y-auto scroll-smooth flex flex-col flex-1 min-w-0" id="main-viewport">
+				<div class="flex-grow p-6 pt-16 md:p-16 md:pt-16">
 					@content
 				</div>
 
-                <footer class="mt-24 pt-8 border-t border-gray-100 text-xs text-gray-400 font-mono">
+                <footer class="mt-24 p-6 md:p-16 pt-8 border-t border-gray-100 text-xs text-gray-400 font-mono">
 					<div class="flex flex-col md:flex-row justify-between gap-4">
-						<div class="flex gap-6">
+						<div class="flex flex-wrap gap-4 md:gap-6">
 							<span>&copy; 2026 Erling T. Nordtvedt</span>
-							<span class="text-gray-300">|</span>
+							<span class="text-gray-300 hidden md:inline">|</span>
 							<span>Oslo, Norway</span>
 						</div>
 						<div class="flex items-center gap-2">
@@ -73,6 +97,40 @@ templ Base(title string, content templ.Component, currentPath string) {
 				</footer>
 			</main>
 		</div>
+
+		// 5. Script to orchestrate the sliding and expanding
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				const toggleBtn = document.getElementById('sidebar-toggle');
+				const sidebar = document.getElementById('main-sidebar');
+				const arrow = document.getElementById('sidebar-arrow');
+				
+				// Determine initial state based on rendered width
+				let isOpen = sidebar.clientWidth > 0;
+
+				if (toggleBtn && sidebar && arrow) {
+					toggleBtn.addEventListener('click', () => {
+						// Strip responsive classes so JavaScript takes full control
+						sidebar.classList.remove('md:w-64', 'md:border-gray-200');
+						arrow.classList.remove('md:rotate-0');
+
+						if (isOpen) {
+							// Slide out of the way & shrink (Main content expands)
+							sidebar.classList.remove('w-64', 'border-gray-200');
+							sidebar.classList.add('w-0', 'border-transparent');
+							arrow.classList.add('rotate-180');
+							isOpen = false;
+						} else {
+							// Slide into view & expand (Main content yields space)
+							sidebar.classList.remove('w-0', 'border-transparent');
+							sidebar.classList.add('w-64', 'border-gray-200');
+							arrow.classList.remove('rotate-180');
+							isOpen = true;
+						}
+					});
+				}
+			});
+		</script>
 	</body>
 	</html>
 }

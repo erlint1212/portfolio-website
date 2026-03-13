@@ -1,0 +1,40 @@
+# Server config — NEVER include in image
+server-config/
+secrets/
+
+# Nix
+flake.nix
+flake.lock
+.direnv/
+result
+result-*
+
+# Kubernetes manifests (not needed in the image)
+kubernetes/
+
+# CI/CD
+.github/
+deploy.sh
+
+# Git
+.git/
+.gitignore
+
+# Docs & notes
+README.md
+TODO.md
+ideas.md
+challenge.md
+project_context.txt
+context_builder.py
+
+# Editor / OS junk
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+
+# Archives
+*.tar.gz
