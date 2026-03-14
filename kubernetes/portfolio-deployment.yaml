@@ -17,7 +17,7 @@ spec:
       imagePullSecrets:
         - name: ghcr-secret
       containers:
-        - image: ghcr.io/erlint1212/portfolio-website:21968e8
+        - image: ghcr.io/erlint1212/portfolio-website:1d0c8b9
           name: portfolio-web
           imagePullPolicy: Always
           resources: {}
