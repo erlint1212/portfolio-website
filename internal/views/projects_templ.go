@@ -34,7 +34,7 @@ func ProjectList(projects []routing.Project) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl fade-in\"><div class=\"flex items-baseline justify-between mb-8 border-b border-gray-200 pb-4\"><h2 class=\"text-xl font-medium\">Selected Engineering Work</h2><span class=\"font-mono text-xs text-gray-400\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-full fade-in\"><div class=\"flex items-baseline justify-between mb-8 border-b border-gray-200 pb-4\"><h2 class=\"text-xl font-medium\">Selected Engineering Work</h2><span class=\"font-mono text-xs text-gray-400\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

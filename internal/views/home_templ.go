@@ -8,7 +8,6 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-// Helper component for expandable technology items
 func techExpandable(name, category, description, link string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -37,7 +36,7 @@ func techExpandable(name, category, description, link string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 8, Col: 116}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 6, Col: 116}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -50,20 +49,20 @@ func techExpandable(name, category, description, link string) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(category)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 11, Col: 97}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 9, Col: 97}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</span><svg class=\"w-4 h-4 text-gray-400 transition-transform duration-200 group-open:rotate-180\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></div></summary><div class=\"mt-2 text-sm text-gray-600 leading-relaxed border-l-2 border-gray-200 pl-3 ml-1.5 mb-2\"><p>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</span> <svg class=\"w-4 h-4 text-gray-400 transition-transform duration-200 group-open:rotate-180\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></div></summary><div class=\"mt-2 text-sm text-gray-600 leading-relaxed border-l-2 border-gray-200 pl-3 ml-1.5 mb-2\"><p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(description)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 27, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 23, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -76,7 +75,7 @@ func techExpandable(name, category, description, link string) templ.Component {
 		var templ_7745c5c3_Var5 templ.SafeURL
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinURLErrs(templ.URL(link))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 28, Col: 37}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/views/home.templ`, Line: 24, Col: 37}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -144,7 +143,7 @@ func homeContent() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"max-w-2xl fade-in\"><header class=\"mb-12\"><h1 class=\"text-3xl md:text-4xl font-semibold mb-6 leading-tight\">Backend Engineer specializing in <br><span class=\"text-gray-500\">Distributed Systems & Data Pipelines.</span></h1><p class=\"text-lg text-gray-600 leading-relaxed\">I build fault-tolerant infrastructure and high-performance data tools.  Currently bridging the gap between <strong class=\"text-black font-medium\">Statistical Modeling</strong> (MSc) and <strong class=\"text-black font-medium\">Systems Engineering</strong> (Go/K8s).</p></header><hr class=\"border-gray-200 mb-12\"><div class=\"grid grid-cols-1 md:grid-cols-2 gap-12\"><div><h3 class=\"font-mono text-xs uppercase tracking-widest text-gray-500 mb-4\">Core Technology</h3><div class=\"space-y-3 text-sm\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"w-full fade-in\"><header class=\"mb-12\"><h1 class=\"text-3xl md:text-4xl font-semibold mb-6 leading-tight\">Backend Engineer specializing in <br><span class=\"text-gray-500\">Distributed Systems & Data Pipelines.</span></h1><p class=\"text-lg text-gray-600 leading-relaxed\">I build fault-tolerant infrastructure and high-performance data tools.  Currently bridging the gap between <strong class=\"text-black font-medium\">Statistical Modeling</strong> (MSc) and <strong class=\"text-black font-medium\">Systems Engineering</strong> (Go/K8s).</p></header><hr class=\"border-gray-200 mb-12\"><div class=\"grid grid-cols-1 md:grid-cols-2 gap-12\"><div><h3 class=\"font-mono text-xs uppercase tracking-widest text-gray-500 mb-4\">Core Technology</h3><div class=\"space-y-3 text-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
