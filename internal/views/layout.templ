@@ -53,13 +53,31 @@ templ Base(title string, content templ.Component, currentPath string) {
 				display: grid;
 				grid-template-columns: var(--sidebar-w) 1fr;
 				transition: grid-template-columns 300ms ease-in-out;
-				height: 100vh;
+				height: 100dvh;
+				height: 100vh; /* fallback for older browsers */
 				overflow: hidden;
+				position: relative;
+			}
+
+			/* Supports check: prefer dvh when available */
+			@supports (height: 100dvh) {
+				.grid-layout {
+					height: 100dvh;
+				}
 			}
 
 			#sidebar-wrapper {
-				overflow: visible;
+				overflow: hidden;
 				position: relative;
+			}
+
+			/* Button lives outside the sidebar, positioned on the grid container */
+			#sidebar-toggle {
+				position: absolute;
+				top: 1rem;
+				left: calc(var(--sidebar-w) + 0.5rem);
+				transition: left 300ms ease-in-out;
+				z-index: 50;
 			}
 
 			#sidebar-arrow {
@@ -71,20 +89,20 @@ templ Base(title string, content templ.Component, currentPath string) {
 
 		<div class="grid-layout w-full max-w-[1600px] mx-auto border-x border-gray-200 shadow-sm">
 
+			// 1. Toggle button — child of the grid container, not the sidebar
+			<button
+				id="sidebar-toggle"
+				class="flex items-center justify-center w-8 h-8 bg-white border border-gray-200 shadow-sm rounded-md hover:bg-gray-50 focus:outline-none"
+				title="Toggle Directory"
+			>
+				<svg id="sidebar-arrow" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+
+			// 2. Sidebar — safely overflow:hidden now, no button to worry about
 			<div id="sidebar-wrapper">
-
-				<button
-					id="sidebar-toggle"
-					class="absolute top-4 z-50 flex items-center justify-center w-8 h-8 bg-white border border-gray-200 shadow-sm rounded-md hover:bg-gray-50 focus:outline-none"
-					style="right: -2.5rem;"
-					title="Toggle Directory"
-				>
-					<svg id="sidebar-arrow" class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-					</svg>
-				</button>
-
-				<div class="w-64 h-full overflow-hidden bg-[#fbfcff] border-r border-gray-200 p-6 pt-14 flex flex-col" id="sidebar-inner">
+				<div class="w-64 h-full bg-[#fbfcff] border-r border-gray-200 p-6 pt-14 flex flex-col" id="sidebar-inner">
 					<div class="mb-10 block">
 						<div class="w-8 h-8 bg-black mb-4 flex-shrink-0"></div>
 						<div>
@@ -96,6 +114,7 @@ templ Base(title string, content templ.Component, currentPath string) {
 				</div>
 			</div>
 
+			// 3. Main viewport — 1fr column, fills all remaining space
 			<main class="relative bg-white overflow-y-auto scroll-smooth flex flex-col min-w-0" id="main-viewport">
 				<div class="flex-grow w-full p-6 pl-14 pt-16 md:p-16 md:pt-16">
 					@content

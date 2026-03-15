@@ -202,26 +202,11 @@
   }
 }
 @layer utilities {
-  .collapse {
-    visibility: collapse;
-  }
-  .visible {
-    visibility: visible;
-  }
-  .absolute {
-    position: absolute;
-  }
   .relative {
     position: relative;
   }
   .static {
     position: static;
-  }
-  .top-4 {
-    top: calc(var(--spacing) * 4);
-  }
-  .z-50 {
-    z-index: 50;
   }
   .container {
     width: 100%;
